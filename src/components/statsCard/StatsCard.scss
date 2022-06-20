@@ -1,0 +1,30 @@
+.stats-card {
+    padding: 2rem;
+
+    .title {
+        color: black;
+        font-size: 1.2rem;
+    }
+
+    &>div {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    & > p {
+       color: gray; 
+    }
+
+    .indicator {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        font-size: 16px;
+    }
+
+    .icon-red {
+        color: red;
+    }
+}

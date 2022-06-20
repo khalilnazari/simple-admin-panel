@@ -1,0 +1,58 @@
+.tableLarge {
+    padding: 2rem;
+    margin-top: 2rem;
+
+    .title {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    table {
+        padding: 0;
+        width: 100%;
+        // background-color: rgb(225, 225, 225);
+    }
+
+    th {
+        padding: 13px 10px;
+        text-align: left;
+    }
+
+    td {
+        padding: 10px;
+        font-weight: 300;
+        font-size: 1rem;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .avatar-wrapper {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+
+        p {
+            font-weight: 500;
+        }
+    } 
+
+    .approved, .rejected, .pending {
+        border-radius: 10px;
+        padding: .1rem .6rem;
+    }
+    .approved {
+        background-color: rgb(212, 239, 211);
+    }
+    .rejected {
+        background-color: rgb(239, 211, 211);
+    }
+    .pending {
+        background-color: rgb(211, 230, 239);
+    }
+}

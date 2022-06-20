@@ -1,0 +1,44 @@
+.sidebar {
+    background-color: #e8e8e8;
+    width: 250px;
+    padding: 1rem;
+    visibility: visible;
+
+
+    .sidebar__section {
+        padding: 1rem 0;
+    }
+
+    .sidebar__title {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #656565;
+    }
+
+    .sidebar__item {
+        font-size: .9rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.3rem 0;
+    }
+
+    .sidebar__link {
+        font-size: .9rem;
+        font-weight: 400;
+        color: #0d0d0d;
+    }
+}
+
+@media (max-width:900px) {
+    // .sidebar {
+    //     position: absolute;
+    //     top: 0;
+    //     left: -300px;
+        
+    //     &.show__sidebar {
+    //         left:0;
+    //     }
+    // }
+}
