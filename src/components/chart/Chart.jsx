@@ -55,11 +55,11 @@ const Chart = () => {
         <div className="chart box-shadow">
             <p className='title'>Chart Title</p>
             <ResponsiveContainer width="100%" aspect={4 / 1}>
-                <LineChart data={data}>
-                <XAxis dataKey="name" stroke="#5550bd" />
+                <LineChart data={data} width="100%" >
+                <XAxis dataKey="name" stroke="#5550bd"/>
                 <Line type="monotone" dataKey='pv' stroke="#5550bd" />
                 <Tooltip />
-                {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />}
+                {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" width="100%" height="100%"/>}
                 </LineChart>
             </ResponsiveContainer>
         </div>

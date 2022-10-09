@@ -1,17 +1,26 @@
 import { Navbar, Sidebar } from "./components";
-import { Dashboard, Users } from "./containers";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { useState } from "react";
+import { Dashboard, Users} from './containers'
+import './App.scss'
 
 
 const App = () => {
+  const [hideSidebar, setHideSidebar] = useState(false); 
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-          <Route path='/' element={<Dashboard />} />
-          <Route path='/users' element={<Users />} />
-      </Routes>
-    </BrowserRouter>
+    <div className={hideSidebar ? "mainWrapper hideSidebar" : "mainWrapper"}>
+      <BrowserRouter>
+        <Navbar  setHideSidebar={setHideSidebar} />
+        <Sidebar hideSidebar={hideSidebar}/>
+
+        <div className="mainContainer">
+          <Routes>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/users' element={<Users />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 

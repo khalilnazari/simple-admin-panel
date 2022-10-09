@@ -1,38 +1,45 @@
-import React, { useEffect, useState } from 'react';
 import './sidebar.scss'; 
 import {BsGraphUp} from 'react-icons/bs'
 import {AiOutlineDashboard, AiOutlineLink} from 'react-icons/ai' 
 import {BiUser} from 'react-icons/bi'
+import { Link } from 'react-router-dom';
 
 
-const Sidebar = () => {
-    const [showSidebar, setShowSidebar] = useState(false); 
-    useEffect( () => {
-        setShowSidebar(false)
-    }, [])
-
-
+const Sidebar = ({hideSidebar}) => {
     return (
-        <div className={showSidebar === true ? "sidebar show__sidebar" : "sidebar"}>
-            <div className='sidebar__section'>
-                <p className="sidebar__title">Home</p>
-                <ul className='slidebar__container'>
-                    <li className='sidebar__item'><AiOutlineDashboard /><a href="/home" className='sidebar__link'>Dashboard</a></li>
-                    <li className='sidebar__item'><BsGraphUp /><a href="/home" className='sidebar__link'>Analytics</a></li>
-                    <li className='sidebar__item'><BsGraphUp /><a href="/home" className='sidebar__link'>Sales</a></li>
-                </ul>
+        <aside className={hideSidebar? "sidebar hideSidebar" : "sidebar"}>
+            <div className='sidebarHeader'>
+                <button>Toggle Hidebar</button>
             </div>
 
-            <div className='sidebar__section'>
-                <p className="sidebar__title">Menu</p>
-                <ul className='slidebar__container'>
-                    <li className='sidebar__item'><BiUser /><a href="/home" className='sidebar__link'>Users</a></li>
-                    <li className='sidebar__item'><AiOutlineLink /><a href="/home" className='sidebar__link'>Products</a></li>
-                    <li className='sidebar__item'><AiOutlineLink /><a href="/home" className='sidebar__link'>Transactions</a></li>
-                    <li className='sidebar__item'><AiOutlineLink /><a href="/home" className='sidebar__link'>Reports</a></li>
-                </ul>
+            <div className='sidebarItemsWrapper'>
+                <div className='sidebarSection'>
+                    <p className="sidebarTitle">Section 1</p>
+                    <div className="sidebarItem">
+                        <Link to="/dashboard" className='sidebarLink'>Dashboard</Link>
+                        <Link to="/users" className='sidebarLink'>Users</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                    </div>
+                </div>
+
+                <div className='sidebarSection'>
+                    <p className="sidebarTitle">Section 2</p>
+                    <div className="sidebarItem">
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                        <Link to="/" className='sidebarLink'>Link Item</Link>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            
+
+            
+        </aside>
     );
 };
 

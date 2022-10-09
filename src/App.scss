@@ -1,0 +1,19 @@
+
+.mainWrapper {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    grid-template-areas: 
+        "header header"
+        "sidebar main";
+
+    &.hideSidebar {
+        grid-template-areas: 
+        "header header"
+        "main main";
+    }
+
+
+    .mainContainer {
+        grid-area: main;
+    }
+}
