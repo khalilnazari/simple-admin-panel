@@ -2,7 +2,7 @@
 
 If you like it please give a star ⭐. Thank 
 
-### This is a multip purpose admin pannel 
+### This is a multipurpose admin pannel 
 
 clone this project  
 ```
