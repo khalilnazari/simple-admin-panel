@@ -1,19 +1,16 @@
-import "./sidebar.scss";
-import { Link } from "react-router-dom";
-import { MdMenu } from "react-icons/md";
+import "./sidebar.scss"
+import { Link } from "react-router-dom"
+import { MdMenu } from "react-icons/md"
 
 const Sidebar = ({ hideSidebar, setHideSidebar }) => {
     return (
         <aside className={hideSidebar ? "sidebar hideSidebar" : "sidebar"}>
             <div className="sidebarHeader">
-                <MdMenu
-                    className="icon"
-                    onClick={() => setHideSidebar((prev) => !prev)}
-                />
+                <MdMenu className="icon" onClick={() => setHideSidebar((prev) => !prev)} />
                 <p>Smart Admin</p>
             </div>
 
-            <div className="sidebarItemsWrapper">
+            <div className="sidebarItemsWrapper custom-scrollbar">
                 <div className="sidebarSection">
                     <p className="sidebarTitle">Section 1</p>
                     <div className="sidebarItem">
@@ -57,7 +54,7 @@ const Sidebar = ({ hideSidebar, setHideSidebar }) => {
                 </div>
             </div>
         </aside>
-    );
-};
+    )
+}
 
-export default Sidebar;
+export default Sidebar

@@ -5,6 +5,8 @@
     grid-template-areas:
         "header header"
         "sidebar main";
+    overflow-x: hidden;
+    margin-top: 60px;
 
     &.hideSidebar {
         grid-template-areas:
@@ -14,6 +16,7 @@
 
     .mainContainer {
         grid-area: main;
+        padding: 20px;
     }
 
     @media (max-width: 820px) {

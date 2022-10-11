@@ -1,31 +1,27 @@
-import { Navbar, Sidebar } from "./components";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import { Dashboard, Users } from "./containers";
-import "./App.scss";
+import { Navbar, Sidebar } from "./components"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useState } from "react"
+import { Dashboard, Form, Tables } from "./containers"
+import "./App.scss"
 
 const App = () => {
-    const [hideSidebar, setHideSidebar] = useState(false);
+    const [hideSidebar, setHideSidebar] = useState(false)
     return (
-        <div
-            className={hideSidebar ? "mainWrapper hideSidebar" : "mainWrapper"}
-        >
+        <div className={hideSidebar ? "mainWrapper hideSidebar" : "mainWrapper"}>
             <BrowserRouter>
                 <Navbar setHideSidebar={setHideSidebar} />
-                <Sidebar
-                    hideSidebar={hideSidebar}
-                    setHideSidebar={setHideSidebar}
-                />
+                <Sidebar hideSidebar={hideSidebar} setHideSidebar={setHideSidebar} />
 
                 <div className="mainContainer">
                     <Routes>
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/users" element={<Users />} />
+                        <Route path="/forms" element={<Form />} />
+                        <Route path="/tables" element={<Tables />} />
                     </Routes>
                 </div>
             </BrowserRouter>
         </div>
-    );
-};
+    )
+}
 
-export default App;
+export default App
