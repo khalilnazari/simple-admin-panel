@@ -23,8 +23,8 @@ const Sidebar = ({ hideSidebar, setHideSidebar }) => {
                         <Link to="/form" className="sidebarLink">
                             Form
                         </Link>
-                        <Link to="/" className="sidebarLink">
-                            Link Item
+                        <Link to="/tables" className="sidebarLink">
+                            Tables
                         </Link>
                         <Link to="/" className="sidebarLink">
                             Link Item
