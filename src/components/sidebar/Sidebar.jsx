@@ -20,8 +20,8 @@ const Sidebar = ({ hideSidebar, setHideSidebar }) => {
                         <Link to="/users" className="sidebarLink">
                             Users
                         </Link>
-                        <Link to="/" className="sidebarLink">
-                            Link Item
+                        <Link to="/form" className="sidebarLink">
+                            Form
                         </Link>
                         <Link to="/" className="sidebarLink">
                             Link Item

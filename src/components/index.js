@@ -9,6 +9,8 @@ import TextInput from "./formElements/textInput/TextInput"
 import ResponstiveTable from "./responsiveTable/ResponsiveTable"
 import PageHeader from "./pageHeader/PageHeader"
 
+import PageTitle from "./pageTitle/PageTitle"
+
 export {
     Navbar,
     Sidebar,
@@ -18,5 +20,6 @@ export {
     SelectInput,
     TextInput,
     ResponstiveTable,
-    PageHeader
+    PageHeader,
+    PageTitle
 }

@@ -1,0 +1,22 @@
+.selectInput {
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        font-size: 6;
+        border-radius: 3px;
+    }
+
+    small {
+        color: red;
+        font-weight: 300;
+        display: block;
+    }
+}

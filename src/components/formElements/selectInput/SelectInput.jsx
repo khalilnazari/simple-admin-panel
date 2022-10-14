@@ -1,14 +1,17 @@
-const SelectInput = ({ label, id, name, value, handleValue, options }) => {
+import "./SelectInput.scss"
+
+const SelectInput = ({ label, id, name, value, handleValue, options, errorMessage }) => {
     return (
-        <div className="input-control">
+        <div className="selectInput">
             <label htmlFor={id}>{label}</label>
-            <select name={name} onChange={handleValue} value={value}>
+            <select name={name} onChange={handleValue} value={value} id={id}>
                 {options.map((option, key) => (
-                    <option value="" key={key}>
+                    <option value={option} key={key}>
                         {option}
                     </option>
                 ))}
             </select>
+            {errorMessage && <small>{errorMessage}</small>}
         </div>
     )
 }
