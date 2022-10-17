@@ -23,5 +23,9 @@
         grid-template-areas:
             "header header"
             "main main";
+
+        .mainContainer {
+            padding: 10px;
+        }
     }
 }

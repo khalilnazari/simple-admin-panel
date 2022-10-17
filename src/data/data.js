@@ -122,7 +122,7 @@ export const users = [
         firstName: "Khalil",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
-        phone: "+6012154897",
+        phoneNumber: "+6012154897",
         address: "Main st 12",
         country: "Afghanistan"
     },
@@ -132,7 +132,7 @@ export const users = [
         firstName: "Mohmmad",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
-        phone: "+6012154897",
+        phoneNumber: "+6012154897",
         address: "Main st 12",
         country: "Afghanistan"
     },
@@ -142,7 +142,7 @@ export const users = [
         firstName: "Farid",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
-        phone: "+6012154897",
+        phoneNumber: "+6012154897",
         address: "Main st 12",
         country: "Afghanistan"
     },
@@ -152,7 +152,7 @@ export const users = [
         firstName: "Zabiiii",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
-        phone: "+6012154897",
+        phoneNumber: "+6012154897",
         address: "Main st 12",
         country: "Afghanistan"
     }

@@ -1,23 +1,15 @@
 import { useCallback, useState } from "react"
 import { FormContainer, PageHeader, TextInput } from "../../components"
-import "./User.scss"
 import Swal from "sweetalert2"
-import { useParams } from "react-router-dom"
-import { users } from "../../data/data"
+import { useNavigate } from "react-router-dom"
 
-const User = () => {
-    const [editInput, setEditInput] = useState(true)
-    let { id } = useParams()
-    id = Number(id)
-    const user = users?.find((user) => user.id === id && user)
-
-    const handleEditForm = () => setEditInput((prev) => !prev)
-
+const UserAdd = () => {
+    const navigate = useNavigate()
     const [input, setInput] = useState({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        phoneNumber: user.phoneNumber || "",
-        email: user.email || ""
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: ""
     })
 
     const handleInputChange = useCallback(
@@ -35,14 +27,14 @@ const User = () => {
         e.preventDefault()
 
         Swal.fire({
-            title: "Do you want to save the changes?",
+            title: "Confirm new user!",
             showCancelButton: true,
             confirmButtonText: "Save",
             denyButtonText: `Don't save`
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire("Saved!", "", "success")
+                Swal.fire("User added successfuly!", "", "success")
             } else if (result.isDenied) {
                 Swal.fire("Changes are not saved", "", "info")
             }
@@ -54,11 +46,7 @@ const User = () => {
     return (
         <div className="user">
             {/* Page title */}
-            <PageHeader
-                title={`User Detail`}
-                editButtonText="Update User"
-                handleEditForm={handleEditForm}
-            />
+            <PageHeader title={`Add new user`} />
 
             {/* Page body */}
             <div className="formWrapper">
@@ -73,7 +61,6 @@ const User = () => {
                                 placeholder="Enter first name"
                                 value={input.firstName}
                                 handleValue={handleInputChange}
-                                editInput={editInput}
                             />
 
                             <TextInput
@@ -84,7 +71,6 @@ const User = () => {
                                 placeholder="Enter last name"
                                 value={input.lastName}
                                 handleValue={handleInputChange}
-                                editInput={editInput}
                             />
 
                             <TextInput
@@ -95,7 +81,6 @@ const User = () => {
                                 placeholder="Enter email"
                                 value={input.email}
                                 handleValue={handleInputChange}
-                                editInput={editInput}
                             />
 
                             <TextInput
@@ -106,21 +91,18 @@ const User = () => {
                                 placeholder="Enter phone"
                                 value={input.phoneNumber}
                                 handleValue={handleInputChange}
-                                editInput={editInput}
                             />
                         </div>
 
                         {/* buttons */}
-                        {!editInput && (
-                            <div className="buttonControl">
-                                <button type="button" onClick={() => setEditInput((prev) => !prev)}>
-                                    Cancel
-                                </button>
-                                <button type="submit" disabled={!canSave}>
-                                    Submit
-                                </button>
-                            </div>
-                        )}
+                        <div className="buttonControl">
+                            <button type="button" onClick={() => navigate(-1)}>
+                                Cancel
+                            </button>
+                            <button type="submit" disabled={!canSave}>
+                                Submit
+                            </button>
+                        </div>
                     </form>
                 </FormContainer>
             </div>
@@ -128,4 +110,4 @@ const User = () => {
     )
 }
 
-export default User
+export default UserAdd

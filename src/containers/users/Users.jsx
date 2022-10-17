@@ -17,7 +17,7 @@ const Users = () => {
                 title="Users"
                 handleSearch={handleSearch}
                 searchPlaceholder="Search user..."
-                buttonText="user"
+                addButtonText="Add User"
             />
 
             <UserTable data={users} columns={columns} path="user" />
