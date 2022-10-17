@@ -1,9 +1,8 @@
 import { projects } from "../../data/projects"
-import { PageHeader, TableBody, TableHeader } from "../../components"
-import "./Tables.scss"
+import { PageHeader, Table } from "../../components"
 
 const Projects = () => {
-    const headers = ["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"]
+    const columns = ["Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6"]
     // jsx
     return (
         <div className="table-wrapper">
@@ -11,12 +10,7 @@ const Projects = () => {
             <PageHeader />
 
             {/* body */}
-            <div className="table-scroll">
-                <table>
-                    <TableHeader headers={headers} />
-                    <TableBody data={projects} />
-                </table>
-            </div>
+            <Table data={projects} columns={columns} />
         </div>
     )
 }

@@ -10,8 +10,8 @@ import PageTitle from "./pageTitle/PageTitle"
 
 import TableLarge from "./tableLarge/TableLarge"
 import ResponstiveTable from "./responsiveTable/ResponsiveTable"
-import TableBody from "./tableComponents/TableBody"
-import TableHeader from "./tableComponents/TableHeader"
+
+import Table from "./table/Table"
 
 export {
     Navbar,
@@ -24,6 +24,5 @@ export {
     ResponstiveTable,
     PageHeader,
     PageTitle,
-    TableBody,
-    TableHeader
+    Table
 }
