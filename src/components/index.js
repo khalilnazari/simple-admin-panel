@@ -11,8 +11,10 @@ import PageTitle from "./pageTitle/PageTitle"
 import TableLarge from "./tableLarge/TableLarge"
 import ResponstiveTable from "./responsiveTable/ResponsiveTable"
 
-import Table from "./table/Table"
+import Table from "./tables/Table"
+import UserTable from "./tables/UserTable"
 
+import FormContainer from "./formContainer/FormContainer"
 export {
     Navbar,
     Sidebar,
@@ -24,5 +26,7 @@ export {
     ResponstiveTable,
     PageHeader,
     PageTitle,
-    Table
+    Table,
+    UserTable,
+    FormContainer
 }

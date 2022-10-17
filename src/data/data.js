@@ -118,6 +118,7 @@ export const projects = [
 export const users = [
     {
         id: 1,
+        type: "admin",
         firstName: "Khalil",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
@@ -127,6 +128,7 @@ export const users = [
     },
     {
         id: 2,
+        type: "normal",
         firstName: "Mohmmad",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
@@ -136,6 +138,7 @@ export const users = [
     },
     {
         id: 3,
+        type: "normal",
         firstName: "Farid",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",
@@ -145,6 +148,7 @@ export const users = [
     },
     {
         id: 4,
+        type: "normal",
         firstName: "Zabiiii",
         lastName: "Ahmad",
         email: "khalil@gmai.lcom",

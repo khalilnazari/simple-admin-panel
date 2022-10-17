@@ -1,7 +1,7 @@
 import { Navbar, Sidebar } from "./components"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
-import { Dashboard, Form, Tables, Users } from "./containers"
+import { Dashboard, Tables, Users, User } from "./containers"
 import "./App.scss"
 
 const App = () => {
@@ -15,9 +15,9 @@ const App = () => {
                 <div className="mainContainer">
                     <Routes>
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/form" element={<Form />} />
                         <Route path="/tables" element={<Tables />} />
                         <Route path="/users" element={<Users />} />
+                        <Route path="/user/:id" element={<User />} />
                     </Routes>
                 </div>
             </BrowserRouter>

@@ -1,6 +1,6 @@
 import Dashboard from "./dashboard/Dashboard"
 import Users from "./users/Users"
-import Form from "./forms/Form"
 import Tables from "./tables/Tables"
+import User from "./user/User"
 
-export { Dashboard, Users, Form, Tables }
+export { Dashboard, Users, Tables, User }

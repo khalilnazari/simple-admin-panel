@@ -1,8 +1,10 @@
 import React from "react"
-import { PageHeader } from "../../components"
+import { PageHeader, UserTable } from "../../components"
 import "./users.scss"
+import { users } from "../../data/data"
 
 const Users = () => {
+    const columns = ["Name", "Type", "Email", "View"]
     const handleSearch = (val) => {
         console.log("search text....", val)
     }
@@ -15,7 +17,10 @@ const Users = () => {
                 title="Users"
                 handleSearch={handleSearch}
                 searchPlaceholder="Search user..."
+                buttonText="user"
             />
+
+            <UserTable data={users} columns={columns} path="user" />
         </div>
     )
 }

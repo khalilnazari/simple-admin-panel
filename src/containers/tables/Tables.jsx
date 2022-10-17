@@ -7,7 +7,7 @@ const Projects = () => {
     return (
         <div className="table-wrapper">
             {/* header */}
-            <PageHeader />
+            <PageHeader title="Tables" link="/add" />
 
             {/* body */}
             <Table data={projects} columns={columns} />
