@@ -114,3 +114,42 @@ export const projects = [
         type: "Windows App"
     }
 ]
+
+export const users = [
+    {
+        id: 1,
+        firstName: "Khalil",
+        lastName: "Ahmad",
+        email: "khalil@gmai.lcom",
+        phone: "+6012154897",
+        address: "Main st 12",
+        country: "Afghanistan"
+    },
+    {
+        id: 2,
+        firstName: "Mohmmad",
+        lastName: "Ahmad",
+        email: "khalil@gmai.lcom",
+        phone: "+6012154897",
+        address: "Main st 12",
+        country: "Afghanistan"
+    },
+    {
+        id: 3,
+        firstName: "Farid",
+        lastName: "Ahmad",
+        email: "khalil@gmai.lcom",
+        phone: "+6012154897",
+        address: "Main st 12",
+        country: "Afghanistan"
+    },
+    {
+        id: 4,
+        firstName: "Zabiiii",
+        lastName: "Ahmad",
+        email: "khalil@gmai.lcom",
+        phone: "+6012154897",
+        address: "Main st 12",
+        country: "Afghanistan"
+    }
+]

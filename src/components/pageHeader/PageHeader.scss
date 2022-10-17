@@ -28,4 +28,25 @@
     .right-col {
         background-color: transparent;
     }
+
+    .search-col {
+        flex-basis: 30%;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+    }
+    .searchIcon {
+        color: gray;
+        width: 50px;
+        cursor: pointer;
+    }
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 14px;
+        border: none;
+        outline: none;
+    }
 }

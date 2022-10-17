@@ -37,7 +37,12 @@
 
     .sidebarLink {
         display: block;
-        padding: 10px;
+        padding: 15px;
+
+        &.active {
+            background-color: lightgray;
+            font-weight: 600;
+        }
 
         &:hover {
             background-color: lightgray;

@@ -1,4 +1,4 @@
-import { projects } from "../../data/projects"
+import { projects } from "../../data/data"
 import { PageHeader, Table } from "../../components"
 
 const Projects = () => {

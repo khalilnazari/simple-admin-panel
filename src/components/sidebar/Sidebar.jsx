@@ -1,5 +1,5 @@
 import "./sidebar.scss"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { MdMenu } from "react-icons/md"
 
 const Sidebar = ({ hideSidebar, setHideSidebar }) => {
@@ -14,21 +14,17 @@ const Sidebar = ({ hideSidebar, setHideSidebar }) => {
                 <div className="sidebarSection">
                     <p className="sidebarTitle">Section 1</p>
                     <div className="sidebarItem">
-                        <Link to="/dashboard" className="sidebarLink">
-                            Dashboard
-                        </Link>
-                        <Link to="/users" className="sidebarLink">
-                            Users
-                        </Link>
-                        <Link to="/form" className="sidebarLink">
-                            Form
-                        </Link>
-                        <Link to="/tables" className="sidebarLink">
-                            Tables
-                        </Link>
-                        <Link to="/" className="sidebarLink">
-                            Link Item
-                        </Link>
+                        {["dashboard", "users", "form", "tables", "profile"].map((item, index) => (
+                            <NavLink
+                                key={index}
+                                to={`/${item}`}
+                                className={({ isActive }) =>
+                                    isActive ? "sidebarLink active" : "sidebarLink"
+                                }
+                            >
+                                {item}
+                            </NavLink>
+                        ))}
                     </div>
                 </div>
 
