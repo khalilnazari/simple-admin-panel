@@ -121,7 +121,7 @@ ul {
 
 // buttons
 .btn {
-    padding: 8px 15px;
+    padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
     border: none;
@@ -147,5 +147,11 @@ ul {
         &:hover {
             background-color: #d6d6d6;
         }
+    }
+
+    &.btn-danger {
+        border: 1px solid red;
+        background-color: red;
+        color: white;
     }
 }

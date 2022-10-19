@@ -26,7 +26,7 @@ const UserTable = ({ columns, data, path }) => {
                                 <td>{item.type}</td>
                                 <td>{item.email}</td>
                                 <td>
-                                    <Link to={`/${path}/${item.id}`} state={{ item }}>
+                                    <Link to={`/${path}/${item.id}`} state={{ item: item }}>
                                         View
                                     </Link>
                                 </td>

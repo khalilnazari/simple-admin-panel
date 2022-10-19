@@ -2,14 +2,22 @@ import { useCallback, useState } from "react"
 import { FormContainer, PageHeader, TextInput } from "../../components"
 import "./User.scss"
 import Swal from "sweetalert2"
-import { useParams } from "react-router-dom"
-import { users } from "../../data/data"
+import { useLocation } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import {
+    updateUserFailure,
+    updateUserStart,
+    updateUserSuccess,
+    deleteUserFailure,
+    deleteUserStart,
+    deleteUserSuccess
+} from "../../redux/userSlice"
 
 const User = () => {
+    const dispatch = useDispatch()
+    const location = useLocation()
+    const user = location.state?.item
     const [editInput, setEditInput] = useState(true)
-    let { id } = useParams()
-    id = Number(id)
-    const user = users?.find((user) => user.id === id && user)
 
     const handleEditForm = () => setEditInput((prev) => !prev)
 
@@ -27,13 +35,9 @@ const User = () => {
         [input]
     )
 
-    // required inputs
-    const { firstName, lastName } = input
-    const canSave = Object.values(firstName, lastName).every(Boolean)
-
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        dispatch(updateUserStart())
         Swal.fire({
             title: "Do you want to save the changes?",
             showCancelButton: true,
@@ -42,12 +46,40 @@ const User = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire("Saved!", "", "success")
-            } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info")
+                dispatch(updateUserSuccess({ data: input, id: user.id }))
+                if (true) {
+                    Swal.fire("Saved!", "Changes has been saved.", "success")
+                } else {
+                    dispatch(updateUserFailure())
+                    Swal.fire("Oppos!", "An error ocurred, please try again.", "error")
+                }
             }
         })
-        console.log(input)
+    }
+
+    // Delete User
+    const handleDeleteUser = () => {
+        dispatch(deleteUserStart)
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteUserSuccess(user.id))
+                if (false) {
+                    Swal.fire("Deleted!", "User has been deleted.", "success")
+                } else {
+                    dispatch(deleteUserFailure)
+                    Swal.fire("Opps!", "An error has been occured. Try again.", "error")
+                }
+            }
+        })
     }
 
     // jsx
@@ -111,13 +143,25 @@ const User = () => {
                         </div>
 
                         {/* buttons */}
-                        {!editInput && (
+                        {!editInput ? (
                             <div className="buttonControl">
-                                <button type="button" onClick={() => setEditInput((prev) => !prev)}>
+                                <button
+                                    type="button"
+                                    className="btn"
+                                    onClick={() => setEditInput((prev) => !prev)}
+                                >
                                     Cancel
                                 </button>
-                                <button type="submit" disabled={!canSave}>
-                                    Submit
+                                <button type="submit">Submit</button>
+                            </div>
+                        ) : (
+                            <div className="buttonControl">
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleDeleteUser()}
+                                >
+                                    Delete User
                                 </button>
                             </div>
                         )}
