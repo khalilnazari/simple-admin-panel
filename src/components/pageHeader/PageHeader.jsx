@@ -30,7 +30,7 @@ const PageHeader = ({
                     onClick={() => navigate(-1)}
                     className="icon"
                 />
-                <h2 className="title">{title}</h2>
+                <h2 className="pageTitle">{title}</h2>
             </div>
             {handleSearch && (
                 <div className="search-col">

@@ -7,13 +7,14 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.297);
+
     .icon {
         cursor: pointer;
     }
 
-    .title {
+    .pageTitle {
         color: --primary-color;
     }
 
