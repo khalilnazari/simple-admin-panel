@@ -4,4 +4,7 @@ import Tables from "./tables/Tables"
 import User from "./user/User"
 import UserAdd from "./userAdd/UserAdd"
 import Profile from "./profile/Profile"
-export { Dashboard, Users, Tables, User, UserAdd, Profile }
+import Login from "./login/Login"
+import ForgetPasswrod from "./login/ForgetPassword"
+
+export { Dashboard, Users, Tables, User, UserAdd, Profile, Login, ForgetPasswrod }

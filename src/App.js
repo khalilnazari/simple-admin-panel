@@ -1,11 +1,21 @@
 import { Navbar, Sidebar } from "./components"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
-import { Dashboard, Tables, Users, User, UserAdd, Profile } from "./containers"
+import {
+    Dashboard,
+    Tables,
+    Users,
+    User,
+    UserAdd,
+    Profile,
+    Login,
+    ForgetPasswrod
+} from "./containers"
 import "./App.scss"
 
 const App = () => {
     const [hideSidebar, setHideSidebar] = useState(false)
+    const login = false
     return (
         <div className={hideSidebar ? "mainWrapper hideSidebar" : "mainWrapper"}>
             <BrowserRouter>
@@ -20,6 +30,8 @@ const App = () => {
                         <Route path="/user/:id" element={<User />} />
                         <Route path="/add-user" element={<UserAdd />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/" element={<Login />} />
+                        <Route path="/forgetpassword" element={<ForgetPasswrod />} />
                         <Route path="*" element={<div>Page not found</div>} />
                     </Routes>
                 </div>

@@ -25,6 +25,7 @@ const TextInput = ({
                 style={{ border: errorMessage ? "1px solid red" : "" }}
                 className={editInput ? "editInput" : ""}
                 disabled={editInput}
+                autoComplete="false"
             />
             {errorMessage && <small>{errorMessage} </small>}
         </div>
