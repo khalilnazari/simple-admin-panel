@@ -6,5 +6,18 @@ import UserAdd from "./userAdd/UserAdd"
 import Profile from "./profile/Profile"
 import Login from "./login/Login"
 import ForgetPasswrod from "./login/ForgetPassword"
+import Projects from "./tables/Tables"
+import Project from "./project/Project"
 
-export { Dashboard, Users, Tables, User, UserAdd, Profile, Login, ForgetPasswrod }
+export {
+    Dashboard,
+    Users,
+    Tables,
+    User,
+    UserAdd,
+    Profile,
+    Login,
+    ForgetPasswrod,
+    Project,
+    Projects
+}
