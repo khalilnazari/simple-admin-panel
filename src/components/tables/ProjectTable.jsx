@@ -3,8 +3,6 @@ import { Link } from "react-router-dom"
 import "./Table.scss"
 
 const ProjectTable = ({ columns, data, path }) => {
-    console.log(data)
-
     return (
         <div className="table-wrapper">
             <div className="table-scroll">
