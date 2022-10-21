@@ -1,5 +1,5 @@
 import React from "react"
-import { PageHeader, UserTable } from "../../components"
+import { PageHeader, ProjectTable } from "../../components"
 import { useSelector } from "react-redux"
 
 const Projects = () => {
@@ -23,7 +23,7 @@ const Projects = () => {
                 addButtonText="Add Project"
             />
 
-            <UserTable data={projects} columns={columns} path="project" />
+            <ProjectTable data={projects} columns={columns} path="project" />
         </>
     )
 }

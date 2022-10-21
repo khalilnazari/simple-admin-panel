@@ -17,16 +17,15 @@ const Project = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const project = location.state?.item
-
     const [editInput, setEditInput] = useState(true)
-
     const handleEditForm = () => setEditInput((prev) => !prev)
 
     const [input, setInput] = useState({
-        firstName: project.firstName || "",
-        lastName: project.lastName || "",
+        projectName: project.projectName || "",
+        clientName: project.clientName || "",
         phoneNumber: project.phoneNumber || "",
-        email: project.email || ""
+        email: project.email || "",
+        joinDate: project.joinDate || ""
     })
 
     const handleInputChange = useCallback(
@@ -37,18 +36,23 @@ const Project = () => {
     )
 
     // update project
-    const handleSubmit = (e) => {
+    const handleUpdate = (e) => {
         e.preventDefault()
+
+        // update start
         dispatch(updateProjectStart())
+
+        // confirmation alert
         Swal.fire({
             title: "Do you want to save the changes?",
             showCancelButton: true,
             confirmButtonText: "Save",
             denyButtonText: `Don't save`
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 dispatch(updateProjectSuccess({ data: input, id: project.id }))
+
+                // if updated successfully
                 if (true) {
                     Swal.fire("Saved!", "Changes has been saved.", "success")
                 } else {
@@ -61,8 +65,10 @@ const Project = () => {
 
     // Delete Project
     const handleDeleteProject = () => {
+        // start delete
         dispatch(deleteProjectStart)
 
+        // confirm alert
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -74,6 +80,8 @@ const Project = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteProjectSuccess(project.id))
+
+                // if deleted successfully
                 if (false) {
                     Swal.fire("Deleted!", "Project has been deleted.", "success")
                 } else {
@@ -97,7 +105,7 @@ const Project = () => {
             {/* Page body */}
             <div className="formWrapper">
                 <FormContainer>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleUpdate}>
                         <div className="inputContainer">
                             <TextInput
                                 label="Project name"
@@ -127,7 +135,7 @@ const Project = () => {
                                 type="text"
                                 name="email"
                                 placeholder="Enter client email"
-                                value={input.clientEmail}
+                                value={input.email}
                                 handleValue={handleInputChange}
                                 editInput={editInput}
                             />
@@ -139,6 +147,16 @@ const Project = () => {
                                 name="phone"
                                 placeholder="Enter phone"
                                 value={input.phoneNumber}
+                                handleValue={handleInputChange}
+                                editInput={editInput}
+                            />
+
+                            <TextInput
+                                label="Join date"
+                                id="joindate"
+                                type="date"
+                                name="joinDate"
+                                value={input.joinDate}
                                 handleValue={handleInputChange}
                                 editInput={editInput}
                             />

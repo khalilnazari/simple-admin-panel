@@ -66,7 +66,7 @@ export const projectSlice = createSlice({
             state.loading = true
             state.error = false
         },
-        deleteProjectsSuccess: (state, action) => {
+        deleteProjectSuccess: (state, action) => {
             console.log(action)
             state.projects = state.projects.filter(
                 (project) => project.id !== action.payload && project
