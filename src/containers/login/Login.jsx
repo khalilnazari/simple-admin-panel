@@ -1,10 +1,11 @@
 import React from "react"
 import "./Login.scss"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { TextInput } from "../../components"
 
 const Login = () => {
+    const navigate = useNavigate()
     // state
     const [input, setInput] = useState({
         password: "",
@@ -19,7 +20,9 @@ const Login = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault()
 
-        console.log(input)
+        localStorage.setItem("adminLogin", true)
+
+        navigate("/dashboard")
     }
 
     // jsx

@@ -14,19 +14,17 @@ const Sidebar = ({ hideSidebar, setHideSidebar }) => {
                 <div className="sidebarSection">
                     <p className="sidebarTitle">Section 1</p>
                     <div className="sidebarItem">
-                        {["dashboard", "users", "tables", "profile", "projects"].map(
-                            (item, index) => (
-                                <NavLink
-                                    key={index}
-                                    to={`/${item}`}
-                                    className={({ isActive }) =>
-                                        isActive ? "sidebarLink active" : "sidebarLink"
-                                    }
-                                >
-                                    {item.toUpperCase()}
-                                </NavLink>
-                            )
-                        )}
+                        {["dashboard", "users", "projects", "tickets"].map((item, index) => (
+                            <NavLink
+                                key={index}
+                                to={`/${item}`}
+                                className={({ isActive }) =>
+                                    isActive ? "sidebarLink active" : "sidebarLink"
+                                }
+                            >
+                                {item.toUpperCase()}
+                            </NavLink>
+                        ))}
                     </div>
                 </div>
 
