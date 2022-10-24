@@ -1,0 +1,57 @@
+.ticketTableWrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+
+    .ticketTable {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    thead {
+        background-color: #ffffff;
+        box-shadow: 0 0px 10px rgba($color: #a8a8a8, $alpha: 0.1);
+    }
+
+    th {
+        padding: 30px 10px;
+        text-align: left;
+        border-bottom: 1px solid rgb(233, 233, 233);
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    tr.bodyRow {
+        box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.1);
+    }
+
+    td {
+        padding: 15px;
+        height: 100px;
+        min-width: 120px;
+    }
+
+    td:first-child {
+        min-width: 300px;
+    }
+    // Stack ticket
+    td:first-child.stack {
+        border-left: 10px solid rgb(255, 217, 0);
+    }
+
+    // Completed ticket
+    td:first-child.complete {
+        border-left: 10px solid rgb(0, 255, 42);
+    }
+
+    // Overdue ticket
+    td:first-child.overdue {
+        border-left: 10px solid rgb(255, 0, 0);
+    }
+
+    // New ticket
+    td:first-child.new {
+        border-left: 10px solid rgb(0, 68, 255);
+    }
+}

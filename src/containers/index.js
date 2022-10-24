@@ -8,7 +8,10 @@ import ForgetPasswrod from "./login/ForgetPassword"
 import Projects from "./projects/Projects"
 import Project from "./project/Project"
 import ProjectAdd from "./projectAdd/ProjectAdd"
-
+import Tickets from "./tickets/Tickets"
+import Ticket from "./ticket/Ticket"
+import TicketAdd from "./TicketAdd/TicketAdd"
+import TicketsTables from "../components/ticketsTable/TicketsTable"
 export {
     Dashboard,
     Users,
@@ -19,5 +22,9 @@ export {
     ForgetPasswrod,
     Project,
     Projects,
-    ProjectAdd
+    ProjectAdd,
+    Tickets,
+    Ticket,
+    TicketAdd,
+    TicketsTables
 }

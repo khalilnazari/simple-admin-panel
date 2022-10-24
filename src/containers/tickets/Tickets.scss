@@ -1,0 +1,92 @@
+.tickets {
+    margin: 10px;
+
+    // sections
+    .ticketSection {
+        margin-top: 20px;
+
+        .sectionTitle {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .overviewSection {
+        display: none;
+        &.show {
+            display: block;
+        }
+    }
+    .newSection {
+        display: none;
+        &.show {
+            display: block;
+        }
+    }
+    .overdueSection {
+        display: none;
+        &.show {
+            display: block;
+        }
+    }
+    .stackSection {
+        display: none;
+        &.show {
+            display: block;
+        }
+    }
+    .completeSection {
+        display: none;
+        &.show {
+            display: block;
+        }
+    }
+
+    // overview boxes
+    .boxes {
+        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+
+        .box {
+            background-color: gray;
+            padding: 30px;
+            border-radius: 3px;
+            color: white;
+        }
+
+        .count {
+            font-size: 30px;
+            display: block;
+        }
+
+        .text {
+            font-size: 18px;
+        }
+
+        .newBox {
+            background-color: blue;
+        }
+
+        .overdueBox {
+            background-color: red;
+        }
+
+        .stackBox {
+            background-color: orange;
+        }
+
+        .completeBox {
+            background-color: green;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .boxes {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+}

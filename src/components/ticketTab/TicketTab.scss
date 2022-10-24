@@ -1,0 +1,39 @@
+.ticketsTabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+
+    .ticketTab {
+        text-align: center;
+        padding: 5px;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            background-color: rgba(156, 32, 228, 0.1);
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: rgba(156, 32, 228, 0.1);
+        }
+    }
+
+    .overviewTab {
+        border-bottom: 3px solid rgb(32, 32, 32);
+    }
+    .newTab {
+        border-bottom: 3px solid rgb(22, 85, 223);
+    }
+
+    .overdueTab {
+        border-bottom: 3px solid rgb(223, 22, 22);
+    }
+
+    .stackTab {
+        border-bottom: 3px solid rgb(223, 159, 22);
+    }
+
+    .completeTab {
+        border-bottom: 3px solid rgb(81, 218, 47);
+    }
+}

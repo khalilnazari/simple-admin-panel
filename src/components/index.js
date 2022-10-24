@@ -12,6 +12,8 @@ import Table from "./tables/Table"
 import UserTable from "./tables/UserTable"
 import ProjectTable from "./tables/ProjectTable"
 import FormContainer from "./formContainer/FormContainer"
+import TicketTab from "./ticketTab/TicketTab"
+import TicketSections from "./ticketSection/TicketSections"
 
 export {
     Navbar,
@@ -27,5 +29,7 @@ export {
     Table,
     UserTable,
     FormContainer,
-    ProjectTable
+    ProjectTable,
+    TicketTab,
+    TicketSections
 }

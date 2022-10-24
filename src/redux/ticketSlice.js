@@ -1,10 +1,113 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const tickets = [
+    {
+        id: "0",
+        title: "Create user form",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Safi",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "completed"
+    },
+    {
+        id: "1",
+        title: "Create user form",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Safi",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "completed"
+    },
+    {
+        id: "2",
+        title: "Create file uploade",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "John Doe",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "stack"
+    },
+    {
+        id: "3",
+        title: "Developed e-commerce chat bot",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Jack bro",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "overdue"
+    },
+    {
+        id: "3",
+        title: "Developed e-commerce chat bot",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Jack bro",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "new"
+    },
+    {
+        id: "03",
+        title: "Developed e-commerce chat bot",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Jack bro",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "new"
+    },
+    {
+        id: "1",
+        title: "Create user form",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Safi",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "completed"
+    },
+    {
+        id: "2",
+        title: "Create file uploade",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "John Doe",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "stack"
+    },
+    {
+        id: "3",
+        title: "Developed e-commerce chat bot",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Jack bro",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "overdue"
+    },
+    {
+        id: "3",
+        title: "Developed e-commerce chat bot",
+        notes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, hic?",
+        createdBy: "Khalil admin",
+        assginedTo: "Jack bro",
+        createdDate: "12-03-2022",
+        deadline: "23-40-2022",
+        status: "new"
+    }
+]
+
 export const ticketSlice = createSlice({
     name: "tickets",
 
     initialState: {
-        tickets: [],
+        tickets: tickets,
         error: null,
         loading: null
     },
