@@ -5,6 +5,7 @@ const SelectInput = ({ label, id, name, value, handleValue, options, errorMessag
         <div className="selectInput">
             <label htmlFor={id}>{label}</label>
             <select name={name} onChange={handleValue} value={value} id={id}>
+                <option value="">Choose - {label}</option>
                 {options.map((option, key) => (
                     <option value={option} key={key}>
                         {option}

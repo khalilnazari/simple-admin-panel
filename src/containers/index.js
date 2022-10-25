@@ -12,6 +12,7 @@ import Tickets from "./tickets/Tickets"
 import Ticket from "./ticket/Ticket"
 import TicketAdd from "./TicketAdd/TicketAdd"
 import TicketsTables from "../components/ticketsTable/TicketsTable"
+import Textarea from "../components/formElements/textarea/Textarea"
 export {
     Dashboard,
     Users,
@@ -26,5 +27,6 @@ export {
     Tickets,
     Ticket,
     TicketAdd,
-    TicketsTables
+    TicketsTables,
+    Textarea
 }

@@ -3,9 +3,6 @@ import "./TicketSections.scss"
 import TicketsTables from "../ticketsTable/TicketsTable"
 
 const TicketSections = ({ tab, tabId, title, ticketList, columns, classList, overview }) => {
-    if (overview) {
-        console.log(ticketList)
-    }
     const OverviewSection = () => (
         <div className={tabId === tab ? `${classList} show` : classList}>
             <p className="sectionTitle">{title}</p>
@@ -33,7 +30,7 @@ const TicketSections = ({ tab, tabId, title, ticketList, columns, classList, ove
     const TicketSections = () => (
         <div className={tabId === tab ? `${classList} show` : classList}>
             <p className="sectionTitle">{title}</p>
-            <TicketsTables tickets={ticketList} columns={columns} />
+            <TicketsTables tickets={ticketList} columns={columns} path="ticket" />
         </div>
     )
 

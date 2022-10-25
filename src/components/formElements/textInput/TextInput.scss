@@ -25,6 +25,10 @@
         }
     }
 
+    input[type="date"] {
+        max-width: 200px;
+    }
+
     small {
         display: block;
         color: red;

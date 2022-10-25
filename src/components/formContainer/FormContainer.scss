@@ -1,4 +1,7 @@
 .formContainer {
+    max-width: 800px;
+    margin: 0 auto;
+
     .switch-wrapper {
         display: flex;
         align-items: center;
@@ -53,11 +56,11 @@
         }
     }
 
-    .inputContainer {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-    }
+    // .inputContainer {
+    //     display: grid;
+    //     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    //     gap: 15px;
+    // }
 
     .buttonControl {
         margin-top: 20px;
@@ -68,7 +71,6 @@
         button {
             font-size: 16px;
             padding: 10px 15px;
-            cursor: pointer;
         }
     }
 

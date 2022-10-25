@@ -154,4 +154,8 @@ ul {
         background-color: red;
         color: white;
     }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
 }

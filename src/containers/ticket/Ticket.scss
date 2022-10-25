@@ -1,0 +1,13 @@
+.ticketDetail {
+    .ticketBody {
+        box-shadow: 0 0 10px rgba(black, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .tickeItem {
+        margin-bottom: 15px;
+        display: flex;
+        gap: 10px;
+    }
+}

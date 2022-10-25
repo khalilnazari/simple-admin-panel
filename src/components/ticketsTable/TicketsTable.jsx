@@ -1,7 +1,7 @@
 import "./TicketTables.scss"
 import { Link } from "react-router-dom"
 
-const TicketsTables = ({ columns, tickets }) => {
+const TicketsTables = ({ columns, tickets, path }) => {
     return (
         <div className="ticketTableWrapper">
             <table className="ticketTable">
@@ -32,7 +32,9 @@ const TicketsTables = ({ columns, tickets }) => {
                             <td>{item.status}</td>
                             <td>{item.createdBy}</td>
                             <td>
-                                <Link to="/">View</Link>
+                                <Link to={`/${path}/${item.id}`} state={{ ticket: item }}>
+                                    View
+                                </Link>
                             </td>
                         </tr>
                     ))}
