@@ -1,106 +1,157 @@
-import React from "react"
-import { useRef } from "react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { FormContainer, PageHeader, SelectInput, Textarea } from "../../components"
-import "./Ticket.scss"
+import Swal from "sweetalert2"
+import { useDispatch } from "react-redux"
+import { FormContainer, PageHeader, SelectInput, TextInput, Textarea } from "../../components"
+import {
+    updateTicketFailure,
+    updateTicketStart,
+    updateTicketSuccess
+} from "../../redux/ticketSlice"
 
 const Ticket = () => {
+    const dispatch = useDispatch()
     const location = useLocation()
-    const ticket = location?.state?.ticket
-    const textareaReft = useRef()
+    const ticket = location?.state.ticket
 
     // state
+    const [editInput, setEditInput] = useState(true)
     const [input, setInput] = useState({
-        replyNote: "",
-        status: ""
+        title: ticket.title || "",
+        notes: ticket.notes || "",
+        assginedTo: ticket.assginedTo || "",
+        deadline: ticket.deadline || "",
+        priority: ticket.priority || "",
+        createdBy: ticket.createdBy || "Khalil Ahmad", // update later.
+        status: ticket.state || "new",
+        createdDate: ticket.createdBy || ""
     })
 
-    // check updaet field are not empty
-    const canSave = Object.values(input).every(Boolean)
-
     // handle form change.
-    const handleInputChange = (e) => {
-        setInput({ ...input, [e.target.name]: e.target.value })
-    }
+    const handleInputChange = useCallback(
+        (e) => {
+            setInput({ ...input, [e.target.name]: e.target.value })
+        },
+        [input]
+    )
 
-    // Got to update form
-    const goUpateForm = () => {
-        textareaReft.current.focus()
-    }
-
-    // handle submit update
-    const handleUpdate = (e) => {
+    // submit
+    const handleSubmit = (e) => {
         e.preventDefault()
         console.log(input)
+
+        input.id = Math.random().toString(16).slice(2)
+        dispatch(updateTicketStart())
+
+        Swal.fire({
+            icon: "warning",
+            title: "Confirm ticket detail!",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, add user!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(updateTicketSuccess(input))
+
+                if (true) {
+                    Swal.fire("Saved!", "The user has been added.", "success")
+                } else {
+                    dispatch(updateTicketFailure())
+                    Swal.fire("Opps!", "An error occured, please try again.", "error")
+                }
+            }
+        })
     }
 
-    // Ticket Item component
-    const TicketItem = ({ value, title }) => (
-        <div className="tickeItem">
-            <strong>{title}: </strong> {value}
-        </div>
-    )
+    // toggle form
+    const handleEditForm = () => setEditInput((prev) => !prev)
 
     // jsx
     return (
-        <div className="ticketDetail">
-            {/* header */}
+        <div className="user">
+            {/* Page title */}
             <PageHeader
                 title="Ticket"
-                editButtonText="Update status"
-                handleEditForm={goUpateForm}
+                editButtonText="Update ticket"
+                handleEditForm={handleEditForm}
             />
 
-            {/* body */}
-            <div className="ticketBody">
-                <div>
-                    <TicketItem title="Title" value={ticket.title} />
-                    <TicketItem title="Notes" value={ticket.notes} />
-                    <TicketItem title="Created By" value={ticket.createdBy} />
-                    <TicketItem title="Assgined To" value={ticket.asignedTo} />
-                    <TicketItem title="Created On" value={ticket.createdDate} />
-                    <TicketItem title="Deadline" value={ticket.deadline} />
-                    <TicketItem title="Status" value={ticket.status} />
-                    <TicketItem title="Priority" value={ticket.priority} />
-                </div>
-            </div>
-
-            {/* update form */}
-            <div className="ticketBody">
+            {/* Page body */}
+            <div className="formWrapper">
                 <FormContainer>
-                    <form onSubmit={handleUpdate}>
+                    <form onSubmit={handleSubmit}>
                         <div className="inputContainer">
-                            <Textarea
-                                setRef={textareaReft}
-                                label="Reply note"
-                                id="replyNote"
-                                name="replyNote"
-                                placeholder="Write a reply"
-                                value={input.replyNote}
+                            <TextInput
+                                label="Ticket title"
+                                id="title"
+                                type="text"
+                                name="title"
+                                placeholder="Enter ticket title"
+                                value={input.title}
                                 handleValue={handleInputChange}
+                                editInput={editInput}
+                            />
+
+                            <Textarea
+                                label="Description"
+                                id="notes"
+                                name="notes"
+                                placeholder="Notes.."
+                                value={input.notes}
+                                handleValue={handleInputChange}
+                                editInput={editInput}
                             />
 
                             <SelectInput
-                                label="Status"
-                                id="status"
-                                name="status"
-                                value={input.status}
+                                label="Asign to"
+                                id="assginedTo"
+                                name="assginedTo"
+                                value={input.assginedTo}
                                 handleValue={handleInputChange}
-                                options={["stack", "complete"]}
+                                options={["1", "2", "3", "Jack bro"]}
                                 errorMessage=""
+                                editInput={editInput}
+                            />
+
+                            <TextInput
+                                label="Deadline"
+                                id="deadline"
+                                type="date"
+                                name="deadline"
+                                placeholder="Enter email"
+                                value={input.deadline}
+                                handleValue={handleInputChange}
+                                editInput={editInput}
+                            />
+
+                            <SelectInput
+                                label="Priority"
+                                id="priority"
+                                name="priority"
+                                value={input.priority}
+                                handleValue={handleInputChange}
+                                options={["high", "medium", "low"]}
+                                errorMessage=""
+                                editInput={editInput}
                             />
                         </div>
 
                         {/* buttons */}
-                        <div className="buttonControl">
-                            <button type="button" className="btn">
-                                Cancel
-                            </button>
-                            <button type="submit" className="btn btn-primary" disabled={!canSave}>
-                                Submit
-                            </button>
-                        </div>
+                        {!editInput && (
+                            <div className="buttonControl">
+                                <button
+                                    type="button"
+                                    className="btn"
+                                    onClick={() => setEditInput((prev) => !prev)}
+                                >
+                                    Cancel
+                                </button>
+                                <button type="submit" className="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        )}
                     </form>
                 </FormContainer>
             </div>
