@@ -1,11 +1,6 @@
 import { useState } from "react"
-import {
-    MdKeyboardBackspace,
-    MdAddCircleOutline,
-    MdSearch,
-    MdOutlineEditNote
-} from "react-icons/md"
-import { useNavigate, Link } from "react-router-dom"
+import { MdAddCircleOutline, MdSearch, MdOutlineEditNote } from "react-icons/md"
+import { Link } from "react-router-dom"
 import "./PageHeader.scss"
 
 const PageHeader = ({
@@ -17,19 +12,12 @@ const PageHeader = ({
     editButtonText,
     handleEditForm
 }) => {
-    const navigate = useNavigate()
     const [searchInput, setSearchInput] = useState()
 
     // jsx
     return (
         <div className="page-header">
             <div className="left-col">
-                <MdKeyboardBackspace
-                    size="25px"
-                    title="Previous page"
-                    onClick={() => navigate(-1)}
-                    className="icon"
-                />
                 <h2 className="pageTitle">{title}</h2>
             </div>
             {handleSearch && (

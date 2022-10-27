@@ -1,17 +1,21 @@
 import { useCallback, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import { useDispatch } from "react-redux"
 import { FormContainer, PageHeader, SelectInput, TextInput, Textarea } from "../../components"
 import {
     updateTicketFailure,
     updateTicketStart,
-    updateTicketSuccess
+    updateTicketSuccess,
+    deleteTicketFailure,
+    deleteTicketStart,
+    deleteTicketSuccess
 } from "../../redux/ticketSlice"
 
 const Ticket = () => {
     const dispatch = useDispatch()
     const location = useLocation()
+    const navigate = useNavigate()
     const ticket = location?.state.ticket
 
     // state
@@ -52,7 +56,7 @@ const Ticket = () => {
             confirmButtonText: "Yes, add user!"
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(updateTicketSuccess(input))
+                dispatch(updateTicketSuccess({ data: input, id: ticket.id }))
 
                 if (true) {
                     Swal.fire("Saved!", "The user has been added.", "success")
@@ -66,6 +70,31 @@ const Ticket = () => {
 
     // toggle form
     const handleEditForm = () => setEditInput((prev) => !prev)
+
+    // handle delete
+    const handleDelete = () => {
+        dispatch(deleteTicketStart())
+        Swal.fire({
+            icon: "warning",
+            title: "Confirm ticket delete!",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteTicketSuccess(ticket.id))
+
+                if (true) {
+                    Swal.fire("Saved!", "The user has been deleted.", "success")
+                    navigate("/tickets")
+                } else {
+                    dispatch(deleteTicketFailure())
+                    Swal.fire("Opps!", "An error occured, please try again.", "error")
+                }
+            }
+        })
+    }
 
     // jsx
     return (
@@ -138,7 +167,7 @@ const Ticket = () => {
                         </div>
 
                         {/* buttons */}
-                        {!editInput && (
+                        {!editInput ? (
                             <div className="buttonControl">
                                 <button
                                     type="button"
@@ -149,6 +178,16 @@ const Ticket = () => {
                                 </button>
                                 <button type="submit" className="btn btn-primary">
                                     Submit
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="buttonControl">
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete()}
+                                >
+                                    Delete ticket
                                 </button>
                             </div>
                         )}
