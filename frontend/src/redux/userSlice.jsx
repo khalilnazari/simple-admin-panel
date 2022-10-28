@@ -30,7 +30,6 @@ export const userSlice = createSlice({
             state.error = false
         },
         addUserSuccess: (state, action) => {
-            console.log(action)
             state.users = [...state.users, action.payload]
             state.loading = false
             state.error = false
@@ -46,7 +45,6 @@ export const userSlice = createSlice({
             state.error = false
         },
         updateUserSuccess: (state, action) => {
-            // console.log("updateUserSuccess", action)
             state.users = state.users.map((user) => {
                 if (user.id === action.payload.id) {
                     return action.payload.data
@@ -68,7 +66,6 @@ export const userSlice = createSlice({
             state.error = false
         },
         deleteUserSuccess: (state, action) => {
-            console.log(action)
             state.users = state.users.filter((user) => user.id !== action.payload && user)
             state.loading = false
             state.error = false

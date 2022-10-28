@@ -1,13 +1,18 @@
 import { useCallback, useState } from "react"
-import { FormContainer, PageHeader, TextInput } from "../../components"
+import { useDispatch } from "react-redux"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
+import { FormContainer, PageHeader, TextInput } from "../../components"
 import { addUserSuccess, addUserFailure, addUserStart } from "../../redux/userSlice"
-import { useDispatch } from "react-redux"
+import useHttp from "../../hooks/useHttp"
 
 const UserAdd = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { postData, error, loading, data } = useHttp()
+
+    console.log("data form server", data)
+    console.log("Loading..: ", loading)
 
     const [input, setInput] = useState({
         firstName: "",
@@ -27,9 +32,8 @@ const UserAdd = () => {
     const { firstName, lastName } = input
     const canSave = Object.values(firstName, lastName).every(Boolean)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        input.id = Math.random().toString(16).slice(2)
         dispatch(addUserStart())
 
         Swal.fire({
@@ -42,8 +46,8 @@ const UserAdd = () => {
             confirmButtonText: "Yes, add user!"
         }).then((result) => {
             if (result.isConfirmed) {
+                postData("user", input)
                 dispatch(addUserSuccess(input))
-
                 if (true) {
                     Swal.fire("Saved!", "The user has been added.", "success")
                 } else {
@@ -59,6 +63,10 @@ const UserAdd = () => {
         <div className="user">
             {/* Page title */}
             <PageHeader title={`Add new user`} />
+
+            {error && (
+                <p style={{ color: "red", background: "#ffe6e6", padding: "10px" }}>{error}</p>
+            )}
 
             {/* Page body */}
             <div className="formWrapper">
@@ -112,7 +120,7 @@ const UserAdd = () => {
                                 Cancel
                             </button>
                             <button type="submit" disabled={!canSave}>
-                                Submit
+                                {loading && <span>Loading...</span>}Submit
                             </button>
                         </div>
                     </form>
