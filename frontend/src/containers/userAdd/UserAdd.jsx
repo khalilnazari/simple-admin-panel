@@ -1,24 +1,23 @@
 import { useCallback, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
 import { FormContainer, PageHeader, TextInput } from "../../components"
-import { addUserSuccess, addUserFailure, addUserStart } from "../../redux/userSlice"
-import useHttp from "../../hooks/useHttp"
+import { createUser } from "../../api/api"
 
 const UserAdd = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { postData, error, loading, data } = useHttp()
 
-    console.log("data form server", data)
-    console.log("Loading..: ", loading)
+    const { hasError, errorMessage, isLoading } = useSelector((state) => state.users)
+    console.log(hasError, errorMessage, isLoading)
 
     const [input, setInput] = useState({
         firstName: "",
         lastName: "",
         phoneNumber: "",
-        email: ""
+        email: "",
+        password: ""
     })
 
     const handleInputChange = useCallback(
@@ -34,7 +33,6 @@ const UserAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(addUserStart())
 
         Swal.fire({
             title: "Please confirm adding user!",
@@ -46,12 +44,11 @@ const UserAdd = () => {
             confirmButtonText: "Yes, add user!"
         }).then((result) => {
             if (result.isConfirmed) {
-                postData("user", input)
-                dispatch(addUserSuccess(input))
-                if (true) {
+                createUser(dispatch, input)
+
+                if (isLoading) {
                     Swal.fire("Saved!", "The user has been added.", "success")
                 } else {
-                    dispatch(addUserFailure())
                     Swal.fire("Opps!", "An error occured, please try again.", "error")
                 }
             }
@@ -64,8 +61,10 @@ const UserAdd = () => {
             {/* Page title */}
             <PageHeader title={`Add new user`} />
 
-            {error && (
-                <p style={{ color: "red", background: "#ffe6e6", padding: "10px" }}>{error}</p>
+            {hasError && (
+                <p style={{ color: "red", background: "#ffe6e6", padding: "10px" }}>
+                    {errorMessage}
+                </p>
             )}
 
             {/* Page body */}
@@ -112,6 +111,15 @@ const UserAdd = () => {
                                 value={input.phoneNumber}
                                 handleValue={handleInputChange}
                             />
+                            <TextInput
+                                label="Password"
+                                id="password"
+                                type="text"
+                                name="password"
+                                placeholder="Enter password"
+                                value={input.password}
+                                handleValue={handleInputChange}
+                            />
                         </div>
 
                         {/* buttons */}
@@ -120,7 +128,7 @@ const UserAdd = () => {
                                 Cancel
                             </button>
                             <button type="submit" disabled={!canSave}>
-                                {loading && <span>Loading...</span>}Submit
+                                {isLoading && <span>Loading...</span>}Submit
                             </button>
                         </div>
                     </form>

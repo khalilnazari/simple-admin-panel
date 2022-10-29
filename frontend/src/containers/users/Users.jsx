@@ -1,12 +1,19 @@
 import React from "react"
-import { PageHeader, UserTable } from "../../components"
+import { useDispatch, useSelector } from "react-redux"
 import "./users.scss"
-// import { users } from "../../data/data"
-import { useSelector } from "react-redux"
+import { PageHeader, UserTable } from "../../components"
+import { useEffect } from "react"
+import { getUsers } from "../../api/api"
 
 const Users = () => {
-    const { users } = useSelector((state) => state.users)
-    console.log(users)
+    const dispatch = useDispatch()
+    const { users, isLoading, hasError, errorMessage } = useSelector((state) => state.users)
+    console.log(isLoading, hasError, errorMessage)
+
+    useEffect(() => {
+        getUsers(dispatch)
+    }, [])
+
     const columns = ["Name", "Type", "Email", "View"]
     const handleSearch = (val) => {
         console.log("search text....", val)
@@ -22,8 +29,11 @@ const Users = () => {
                 searchPlaceholder="Search user..."
                 addButtonText="Add User"
             />
-
-            <UserTable data={users} columns={columns} path="user" />
+            {isLoading ? (
+                <div>Loading..</div>
+            ) : (
+                <UserTable data={users} columns={columns} path="user" />
+            )}
         </div>
     )
 }

@@ -18,8 +18,8 @@ const UserTable = ({ columns, data, path }) => {
 
                     {/* body */}
                     <tbody>
-                        {data.map((item) => (
-                            <tr key={item.id}>
+                        {data.map((item, index) => (
+                            <tr key={index}>
                                 <td>
                                     {item.firstName} {item.lastName}
                                 </td>
