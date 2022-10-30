@@ -10,7 +10,6 @@ const UserAdd = () => {
     const navigate = useNavigate()
 
     const { hasError, errorMessage, isLoading } = useSelector((state) => state.users)
-    console.log(hasError, errorMessage, isLoading)
 
     const [input, setInput] = useState({
         firstName: "",
@@ -33,26 +32,12 @@ const UserAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        Swal.fire({
-            title: "Please confirm adding user!",
-            text: "You can try again!",
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, add user!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                createUser(dispatch, input)
-
-                if (isLoading) {
-                    Swal.fire("Saved!", "The user has been added.", "success")
-                } else {
-                    Swal.fire("Opps!", "An error occured, please try again.", "error")
-                }
-            }
-        })
+        const response = await createUser(dispatch, input)
+        if (response) {
+            Swal.fire("Saved!", "The user has been added.", "success")
+        } else {
+            Swal.fire("Opps!", "An error occured, please try again.", "error")
+        }
     }
 
     // jsx

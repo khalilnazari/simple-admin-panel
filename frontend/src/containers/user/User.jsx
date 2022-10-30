@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import { FormContainer, PageHeader, TextInput } from "../../components"
 import "./User.scss"
 import Swal from "sweetalert2"
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import {
     updateUserFailure,
@@ -12,20 +12,40 @@ import {
     deleteUserStart,
     deleteUserSuccess
 } from "../../redux/userSlice"
+import { useEffect } from "react"
+import { getUser } from "../../api/api"
 
 const User = () => {
     const dispatch = useDispatch()
     const location = useLocation()
-    const user = location.state?.item
-    const [editInput, setEditInput] = useState(true)
+    const userState = location?.state?.item
 
+    // state
+    const [user, setUser] = useState(userState)
+    const [editInput, setEditInput] = useState(true)
+    const { id } = useParams()
+
+    const fetchUser = async () => {
+        const user = await getUser(id)
+        setUser(user)
+    }
+
+    useEffect(() => {
+        if (!user) {
+            fetchUser()
+        }
+    })
+
+    console.log(user)
+
+    // handle edit form
     const handleEditForm = () => setEditInput((prev) => !prev)
 
     const [input, setInput] = useState({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        phoneNumber: user.phoneNumber || "",
-        email: user.email || ""
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        phoneNumber: user?.phoneNumber || "",
+        email: user?.email || ""
     })
 
     const handleInputChange = useCallback(

@@ -1,20 +1,25 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import "./users.scss"
-import { PageHeader, UserTable } from "../../components"
+import { AlertError, PageHeader, UserTable } from "../../components"
 import { useEffect } from "react"
 import { getUsers } from "../../api/api"
 
 const Users = () => {
-    const dispatch = useDispatch()
-    const { users, isLoading, hasError, errorMessage } = useSelector((state) => state.users)
-    console.log(isLoading, hasError, errorMessage)
+    // table columns
+    const columns = ["Name", "Type", "Email", "View"]
 
+    const dispatch = useDispatch()
+
+    // state
+    const { users, isLoading, hasError, errorMessage } = useSelector((state) => state.users)
+
+    // mount
     useEffect(() => {
         getUsers(dispatch)
     }, [])
 
-    const columns = ["Name", "Type", "Email", "View"]
+    // handle search users
     const handleSearch = (val) => {
         console.log("search text....", val)
     }
@@ -29,6 +34,8 @@ const Users = () => {
                 searchPlaceholder="Search user..."
                 addButtonText="Add User"
             />
+
+            {hasError && <AlertError errorMessage={errorMessage} />}
             {isLoading ? (
                 <div>Loading..</div>
             ) : (
