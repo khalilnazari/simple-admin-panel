@@ -28,10 +28,7 @@ const createDepartment = async (req, res) => {
     try {
         const newDept = new Department(req.body)
         const savedDept = await newDept.save()
-
-        setTimeout(() => {
-            res.status(201).json(savedDept)
-        }, 2000)
+        res.status(201).json(savedDept)
     } catch (err) {
         res.status(500).json(err)
         console.log(err)
@@ -42,9 +39,45 @@ const createDepartment = async (req, res) => {
 const getDepartments = async (req, res) => {
     try {
         const depts = await Department.find()
-        setTimeout(() => {
-            res.status(201).json(depts)
-        }, 2000)
+        res.status(201).json(depts)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// fetch One dept
+const getDepartment = async (req, res) => {
+    const { id } = req.body
+
+    try {
+        const dept = await Department.findOne(id)
+        res.status(201).json(dept)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// update Dept
+const updateDepartment = async (req, res) => {
+    const { id } = req.body
+    try {
+        const updatedUser = await Department.findByIdAndUpdate(
+            id,
+            { $set: req.body },
+            { new: true }
+        )
+        res.status(201).json(updatedUser)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// delete Dept
+const deleteDepartment = async (req, res) => {
+    const { id } = req.body
+    try {
+        const result = await Department.findByIdAndDelete(id)
+        res.status(201).json({ message: "The dept has been deleted successfully." })
     } catch (error) {
         console.log(error)
     }
@@ -52,5 +85,7 @@ const getDepartments = async (req, res) => {
 
 module.exports = {
     createDepartment,
-    getDepartments
+    getDepartments,
+    updateDepartment,
+    deleteDepartment
 }
