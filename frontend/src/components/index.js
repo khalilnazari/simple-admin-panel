@@ -15,7 +15,8 @@ import FormContainer from "./formContainer/FormContainer"
 import TicketTab from "./ticketTab/TicketTab"
 import TicketSections from "./ticketSection/TicketSections"
 import Textarea from "./formElements/textarea/Textarea"
-import AlertError from "./alert/AlertError"
+import { AlertError, AlertSuccess } from "./alert/Alert"
+import DepartmentTable from "./tables/DepartmentTable"
 
 export {
     Navbar,
@@ -35,5 +36,7 @@ export {
     TicketTab,
     TicketSections,
     Textarea,
-    AlertError
+    AlertError,
+    AlertSuccess,
+    DepartmentTable
 }

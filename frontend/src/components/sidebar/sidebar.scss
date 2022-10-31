@@ -38,6 +38,7 @@
     .sidebarLink {
         display: block;
         padding: 15px;
+        text-transform: capitalize;
 
         &.active {
             background-color: lightgray;

@@ -10,12 +10,16 @@ const TextInput = ({
     value,
     handleValue,
     errorMessage,
-    editInput
+    editInput,
+    required
 }) => {
     return (
         <div className="textInput">
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label} {required && <span className="requiredStar">*</span>}
+            </label>
             <input
+                required={required}
                 id={id}
                 type={type}
                 name={name}

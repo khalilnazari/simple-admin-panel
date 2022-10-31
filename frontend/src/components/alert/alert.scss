@@ -1,6 +1,15 @@
-.alertError {
-    color: red;
-    background-color: #ffe4e4;
+@mixin alertDefault {
     padding: 10px;
     border-radius: 3px;
+}
+.alertError {
+    @include alertDefault();
+    color: red;
+    background-color: #ffe4e4;
+}
+
+.alertSuccss {
+    @include alertDefault();
+    color: rgb(0, 255, 85);
+    background-color: #e4ffe8;
 }
