@@ -59,7 +59,18 @@ const getDepartment = async (req, res) => {
 
 // update Dept
 const updateDepartment = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
+    const { deptName, deptId } = req.body
+
+    // check required fields
+    if (!deptName) {
+        return res.status(400).json({ message: "Dept name is rquired fields." })
+    }
+
+    if (!deptId) {
+        return res.status(400).json({ message: "Dept ID is rquired fields." })
+    }
+
     try {
         const updatedUser = await Department.findByIdAndUpdate(
             id,

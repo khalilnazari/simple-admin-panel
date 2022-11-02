@@ -16,6 +16,7 @@ import Textarea from "../components/formElements/textarea/Textarea"
 import Department from "./department/Department"
 import DepartmentAdd from "./departmentAdd/DepartmentAdd"
 import Departments from "./departments/Departments"
+import DepartmentUpdate from "./departmentUpdate/DepartmentUpdate"
 
 export {
     Dashboard,
@@ -35,5 +36,6 @@ export {
     Textarea,
     Department,
     DepartmentAdd,
-    Departments
+    Departments,
+    DepartmentUpdate
 }

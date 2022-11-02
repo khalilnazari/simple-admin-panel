@@ -17,7 +17,7 @@ import TicketSections from "./ticketSection/TicketSections"
 import Textarea from "./formElements/textarea/Textarea"
 import { AlertError, AlertSuccess } from "./alert/Alert"
 import DepartmentTable from "./tables/DepartmentTable"
-
+import Loading from "./loading/Loading"
 export {
     Navbar,
     Sidebar,
@@ -38,5 +38,6 @@ export {
     Textarea,
     AlertError,
     AlertSuccess,
-    DepartmentTable
+    DepartmentTable,
+    Loading
 }

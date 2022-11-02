@@ -52,12 +52,12 @@ export const departmentSlice = createSlice({
             state.hasError = false
         },
         updateDepartmentSuccess: (state, action) => {
-            state.departments = state.departments.map((user) => {
-                if (user.id === action.payload.id) {
+            state.departments = state.departments.map((dept) => {
+                if (dept._id === action.payload.id) {
                     return action.payload.data
                 }
 
-                return user
+                return dept
             })
             state.isLoading = false
             state.hasError = false

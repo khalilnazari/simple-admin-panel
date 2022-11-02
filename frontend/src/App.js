@@ -17,7 +17,8 @@ import {
     TicketAdd,
     Departments,
     Department,
-    DepartmentAdd
+    DepartmentAdd,
+    DepartmentUpdate
 } from "./containers"
 import "./App.scss"
 
@@ -48,6 +49,7 @@ const App = () => {
                         <Route path="/departments" element={<Departments />} />
                         <Route path="/department/:id" element={<Department />} />
                         <Route path="/department-add" element={<DepartmentAdd />} />
+                        <Route path="/department-update/:id" element={<DepartmentUpdate />} />
                         <Route path="*" element={<div>Page not found</div>} />
                     </Routes>
                 </div>

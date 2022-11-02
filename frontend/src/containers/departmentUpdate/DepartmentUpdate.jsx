@@ -1,23 +1,26 @@
 import { useCallback, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
 import Swal from "sweetalert2"
-import { useNavigate } from "react-router-dom"
-import { AlertError, FormContainer, PageHeader, TextInput } from "../../components"
-import { createDepartment } from "../../api/departmentApi"
-
 import { FaSpinner } from "react-icons/fa"
+import { AlertError, FormContainer, Loading, PageHeader, TextInput } from "../../components"
+import { updateDepartment } from "../../api/departmentApi"
 
-const DepartmentAdd = () => {
+const DepartmentUpdate = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const params = useParams()
 
-    const { hasError, errorMessage, isLoading } = useSelector((state) => state.departments)
+    const { departments, hasError, errorMessage, isLoading } = useSelector(
+        (state) => state.departments
+    )
+    const department = departments.find((dept) => dept?._id === params?.id)
 
     // state
     const [input, setInput] = useState({
-        deptName: "",
-        deptId: "",
-        deptHead: ""
+        deptName: department.deptName || "",
+        deptId: department.deptId || "",
+        deptHead: department.deptHead || ""
     })
 
     const handleInputChange = useCallback(
@@ -30,10 +33,10 @@ const DepartmentAdd = () => {
     // handle submit
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await createDepartment(dispatch, input)
+        const response = await updateDepartment(dispatch, input, params.id)
 
         if (response) {
-            Swal.fire("Saved!", "The user has been added.", "success")
+            Swal.fire("Saved!", "Changes have been saved.", "success")
         } else {
             Swal.fire("Opps!", "An error occured, please try again.", "error")
         }
@@ -42,6 +45,8 @@ const DepartmentAdd = () => {
     // jsx
     return (
         <div>
+            {isLoading && <Loading loadingMessage="Saving changes..." />}
+
             {/* Page title */}
             <PageHeader title="New department" />
 
@@ -106,4 +111,4 @@ const DepartmentAdd = () => {
     )
 }
 
-export default DepartmentAdd
+export default DepartmentUpdate

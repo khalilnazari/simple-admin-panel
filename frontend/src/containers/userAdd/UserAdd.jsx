@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
 import { FormContainer, PageHeader, TextInput } from "../../components"
-import { createUser } from "../../api/api"
+import { createUser } from "../../api/userApi"
 
 const UserAdd = () => {
     const dispatch = useDispatch()

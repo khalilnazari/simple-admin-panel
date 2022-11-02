@@ -15,7 +15,7 @@ const Department = () => {
             {/* header */}
             <PageHeader
                 title="Department"
-                link={`/department-add/${department._id}`}
+                link={`/department-update/${department._id}`}
                 addButtonText="Update details"
             />
 

@@ -3,7 +3,7 @@ import React from "react"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AlertError, PageHeader, DepartmentTable } from "../../components"
-import { getDepartments } from "../../api/api"
+import { getDepartments } from "../../api/departmentApi"
 
 const Departments = () => {
     // table columns
@@ -36,7 +36,7 @@ const Departments = () => {
                 addButtonText="Add Department"
             />
 
-            {hasError && <AlertError errorMessage={errorMessage} />}
+            {hasError && <AlertError message={errorMessage} />}
 
             {isLoading ? (
                 <div>Loading..</div>

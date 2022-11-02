@@ -13,7 +13,7 @@ import {
     deleteUserSuccess
 } from "../../redux/userSlice"
 import { useEffect } from "react"
-import { getUser } from "../../api/api"
+import { getUser } from "../../api/userApi"
 
 const User = () => {
     const dispatch = useDispatch()

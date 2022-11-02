@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import "./users.scss"
 import { AlertError, PageHeader, UserTable } from "../../components"
 import { useEffect } from "react"
-import { getUsers } from "../../api/api"
+import { getUsers } from "../../api/userApi"
 
 const Users = () => {
     // table columns
@@ -35,7 +35,8 @@ const Users = () => {
                 addButtonText="Add User"
             />
 
-            {hasError && <AlertError errorMessage={errorMessage} />}
+            {hasError && <AlertError message={errorMessage} />}
+
             {isLoading ? (
                 <div>Loading..</div>
             ) : (
