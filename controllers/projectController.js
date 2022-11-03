@@ -1,5 +1,5 @@
 const Project = require("../model/Project")
-// const Department = require("../model/Department")
+const Department = require("../model/Department")
 // const Ticket = require("../model/Ticket")
 
 const INTERNAL_ERROR_MESSAGE = "Internal server error. Please contact engineering team."
@@ -7,7 +7,7 @@ const INTERNAL_ERROR_MESSAGE = "Internal server error. Please contact engineerin
 /****************************** Create project ****************************** */
 
 const createProject = async (req, res) => {
-    const { projectName, projectId, departmentId } = req.body
+    const { projectName, projectId, department: departmentId } = req.body
 
     // chekf required fields
     if (!projectName) {
@@ -34,14 +34,20 @@ const createProject = async (req, res) => {
         // 1:
         const newProject = new Project(req.body)
         const savedProject = await newProject.save()
+        const { _id, ...info } = savedProject._doc
+        const newProjectID = _id.toString()
 
         // 2:
-        const department = await Department.find({ _id: departmentId })
+        const department = await Department.findByIdAndUpdate(departmentId, {
+            $push: { projects: newProjectID }
+        })
+
         if (!department) {
             return res.status(401).json({ message: "We couldn't find the select department." })
         }
-        let currentProjectsInDept = await department.projects
-        let updatedProjectsInDept = [...currentProjectsInDept, savedProject._id]
+        let currentProjectsInDept = department.projects
+
+        let updatedProjectsInDept = currentProjectsInDept.push(savedProject._id)
         const updatedDepartment = await Department.findByIdAndUpdate(departmentId, {
             projects: updatedProjectsInDept
         })

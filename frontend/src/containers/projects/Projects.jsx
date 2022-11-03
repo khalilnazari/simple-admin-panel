@@ -1,10 +1,19 @@
 import React from "react"
-import { PageHeader, ProjectTable } from "../../components"
-import { useSelector } from "react-redux"
+import { AlertError, PageHeader, ProjectTable } from "../../components"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { getProjects } from "../../api/projectApi"
 
 const Projects = () => {
-    const { projects } = useSelector((state) => state.projects)
+    const dispatch = useDispatch()
+    const { projects, isLoading, hasError, errorMessage } = useSelector((state) => state.projects)
 
+    // call to fetch projects
+    useEffect(() => {
+        getProjects(dispatch)
+    }, [])
+
+    // handle search
     const handleSearch = (val) => {
         console.log("search text....", val)
     }
@@ -22,6 +31,12 @@ const Projects = () => {
                 searchPlaceholder="Search user..."
                 addButtonText="Add Project"
             />
+
+            {/* Loading */}
+            {isLoading && <p>Loading...</p>}
+
+            {/* Alert */}
+            {hasError && <AlertError message={errorMessage} />}
 
             <ProjectTable data={projects} columns={columns} path="project" />
         </>

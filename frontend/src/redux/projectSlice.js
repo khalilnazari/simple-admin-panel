@@ -16,8 +16,8 @@ export const projectSlice = createSlice({
             state.hasError = false
             state.errorMessage = null
         },
-        getProjectSuccess: (state) => {
-            state.projects = [...state.projects]
+        getProjectSuccess: (state, action) => {
+            state.projects = action.payload
             state.isLoading = false
             state.hasError = false
         },
@@ -99,7 +99,10 @@ export const {
     updateProjectFailure,
     deleteProjectFailure,
     deleteProjectStart,
-    deleteProjectSuccess
+    deleteProjectSuccess,
+    getProjectStart,
+    getProjectSuccess,
+    getProjectFailure
 } = projectSlice.actions
 
 export default projectSlice.reducer
