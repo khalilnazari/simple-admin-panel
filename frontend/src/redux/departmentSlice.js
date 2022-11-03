@@ -7,7 +7,8 @@ export const departmentSlice = createSlice({
         hashasError: null,
         errorMessage: null,
         isLoading: null,
-        successMessage: null
+        successMessage: null,
+        departmentsList: []
     },
 
     reducers: {

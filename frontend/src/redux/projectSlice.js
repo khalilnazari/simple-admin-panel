@@ -4,46 +4,53 @@ export const projectSlice = createSlice({
     name: "projects",
     initialState: {
         projects: [],
-        error: null,
-        loading: null
+        hasError: null,
+        errorMessage: null,
+        isLoading: null
     },
 
     reducers: {
         getProjectStart: (state) => {
             state.projects = []
-            state.loading = true
-            state.error = false
+            state.isLoading = true
+            state.hasError = false
+            state.errorMessage = null
         },
         getProjectSuccess: (state) => {
             state.projects = [...state.projects]
-            state.loading = false
-            state.error = false
+            state.isLoading = false
+            state.hasError = false
         },
         getProjectFailure: (state) => {
             state.projects = []
-            state.loading = false
-            state.error = true
+            state.isLoading = false
+            state.hasError = true
         },
         addProjectStart: (state) => {
             state.projects = [...state.projects]
-            state.loading = true
-            state.error = false
+            state.isLoading = true
+            state.hasError = false
+            state.errorMessage = null
+            state.successMessage = null
         },
         addProjectSuccess: (state, action) => {
-            console.log(action)
-            state.projects = [...state.projects, action.payload]
-            state.loading = false
-            state.error = false
+            state.projects = [...state.projects, action.payload.data]
+            state.isLoading = false
+            state.hasError = false
+            state.errorMessage = null
+            state.successMessage = action.payload.message
         },
-        addProjectFailure: (state) => {
+        addProjectFailure: (state, action) => {
             state.projects = [...state.projects]
-            state.loading = false
-            state.error = true
+            state.isLoading = false
+            state.hasError = true
+            state.errorMessage = action.payload
+            state.successMessage = null
         },
         updateProjectStart: (state) => {
             state.projects = [...state.projects]
-            state.loading = true
-            state.error = false
+            state.isLoading = true
+            state.hasError = false
         },
         updateProjectSuccess: (state, action) => {
             state.projects = state.projects.map((project) => {
@@ -53,31 +60,31 @@ export const projectSlice = createSlice({
 
                 return project
             })
-            state.loading = false
-            state.error = false
+            state.isLoading = false
+            state.hasError = false
         },
         updateProjectFailure: (state) => {
             state.projects = [...state.projects]
-            state.loading = false
-            state.error = true
+            state.isLoading = false
+            state.hasError = true
         },
         deleteProjectStart: (state) => {
             state.projects = [...state.projects]
-            state.loading = true
-            state.error = false
+            state.isLoading = true
+            state.hasError = false
         },
         deleteProjectSuccess: (state, action) => {
             console.log(action)
             state.projects = state.projects.filter(
                 (project) => project.id !== action.payload && project
             )
-            state.loading = false
-            state.error = false
+            state.isLoading = false
+            state.hasError = false
         },
         deleteProjectFailure: (state) => {
             state.projects = [...state.projects]
-            state.loading = false
-            state.error = true
+            state.isLoading = false
+            state.hasError = true
         }
     }
 })

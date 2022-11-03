@@ -1,21 +1,36 @@
 import { useCallback, useState } from "react"
-import { FormContainer, PageHeader, TextInput } from "../../components"
+import {
+    SelectInput,
+    FormContainer,
+    PageHeader,
+    TextInput,
+    Loading,
+    AlertError,
+    AlertSuccess
+} from "../../components"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
-import { addProjectSuccess, addProjectFailure, addProjectStart } from "../../redux/projectSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { createProject } from "../../api/projectApi"
 
 const ProjectAdd = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    // state
+    const { isLoading, hasError, errorMessage, successMessage } = useSelector(
+        (state) => state.projects
+    )
+    const { departments } = useSelector((state) => state.departments)
     const [input, setInput] = useState({
         projectName: "",
+        projectId: "",
         clientName: "",
-        phoneNumber: "",
-        email: "",
-        joinDate: ""
+        clientEmail: "",
+        projectManager: "",
+        department: ""
     })
+    const departmentsName = departments.map((dept) => dept.deptName)
 
     // handle input change
     const handleInputChange = useCallback(
@@ -24,43 +39,27 @@ const ProjectAdd = () => {
         },
         [input]
     )
+    const handleInputDeptChange = (e) => {
+        const { _id: departmentId } = departments.find((dept) => dept.deptName === e.target.value)
+        setInput({ ...input, [e.target.name]: departmentId })
+    }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        input.id = Math.random().toString(16).slice(2)
-
-        // start add
-        dispatch(addProjectStart())
-
-        // confirm alert
-        Swal.fire({
-            title: "Please confirm adding project!",
-            text: "You can try again!",
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, add user!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(addProjectSuccess(input))
-
-                // if added successfully
-                if (true) {
-                    Swal.fire("Saved!", "The project has been added.", "success")
-                } else {
-                    dispatch(addProjectFailure())
-                    Swal.fire("Opps!", "An error occured, please try again.", "error")
-                }
-            }
-        })
+        createProject(dispatch, input)
     }
 
     // jsx
     return (
         <div className="project">
+            {isLoading && <Loading loadingMessage="Saving project..." />}
+
             {/* Page title */}
             <PageHeader title={`Add new project`} />
+
+            {/* Alerts */}
+            {hasError && <AlertError message={errorMessage} />}
+            {successMessage && <AlertSuccess message={successMessage} />}
 
             {/* Page body */}
             <div className="formWrapper">
@@ -78,7 +77,17 @@ const ProjectAdd = () => {
                             />
 
                             <TextInput
-                                label="Client"
+                                label="Project ID"
+                                id="projectId"
+                                type="text"
+                                name="projectId"
+                                placeholder="Enter project ID"
+                                value={input.projectId}
+                                handleValue={handleInputChange}
+                            />
+
+                            <TextInput
+                                label="Client Name"
                                 id="clientName"
                                 type="text"
                                 name="clientName"
@@ -88,30 +97,33 @@ const ProjectAdd = () => {
                             />
 
                             <TextInput
-                                label="Email"
-                                id="email"
+                                label="Client email"
+                                id="clientEmail"
                                 type="text"
-                                name="email"
-                                placeholder="Enter client email"
-                                value={input.email}
+                                name="clientEmail"
+                                placeholder="Enter client name"
+                                value={input.clientEmail}
                                 handleValue={handleInputChange}
                             />
 
-                            <TextInput
-                                label="Phone number"
-                                id="phone"
-                                type="text"
-                                name="phoneNumber"
-                                placeholder="Enter phone"
-                                value={input.phoneNumber}
-                                handleValue={handleInputChange}
+                            {/* department */}
+                            <SelectInput
+                                label="Department"
+                                id="department"
+                                name="department"
+                                value={input.department}
+                                options={departmentsName}
+                                handleValue={handleInputDeptChange}
+                                errorMessage=""
                             />
+
                             <TextInput
-                                label="Join date"
-                                id="joindate"
-                                type="date"
-                                name="joinDate"
-                                value={input.joinDate}
+                                label="Project Manager"
+                                id="projectManager"
+                                type="text"
+                                name="projectManager"
+                                placeholder="Enter phone"
+                                value={input.projectManager}
                                 handleValue={handleInputChange}
                             />
                         </div>

@@ -4,6 +4,7 @@ import StatsCard from "./statsCard/StatsCard"
 import Chart from "./chart/Chart"
 import SelectInput from "./formElements/selectInput/SelectInput"
 import TextInput from "./formElements/textInput/TextInput"
+import DatalistInput from "./formElements/datalistInput/DataistInput"
 import PageHeader from "./pageHeader/PageHeader"
 import PageTitle from "./pageTitle/PageTitle"
 import TableLarge from "./tableLarge/TableLarge"
@@ -39,5 +40,6 @@ export {
     AlertError,
     AlertSuccess,
     DepartmentTable,
-    Loading
+    Loading,
+    DatalistInput
 }

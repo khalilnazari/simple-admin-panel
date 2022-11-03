@@ -15,9 +15,11 @@ app.use(cors())
 const authRoute = require("./routes/authRoute")
 const userRoute = require("./routes/userRoute")
 const departmentRoute = require("./routes/deptRoutes")
+const projectRoute = require("./routes/projectRoute")
 app.use("/api/auth", authRoute)
 app.use("/api/user", userRoute)
 app.use("/api/department", departmentRoute)
+app.use("/api/project", projectRoute)
 
 // middleware
 
