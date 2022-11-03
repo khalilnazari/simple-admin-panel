@@ -85,10 +85,13 @@ const updateDepartment = async (req, res) => {
 
 // delete Dept
 const deleteDepartment = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
+
     try {
-        const result = await Department.findByIdAndDelete(id)
-        res.status(201).json({ message: "The dept has been deleted successfully." })
+        await Department.findByIdAndDelete(id)
+        setTimeout(() => {
+            res.status(201).json({ message: "The dept has been deleted successfully." })
+        }, 2000)
     } catch (error) {
         console.log(error)
     }

@@ -15,6 +15,7 @@ export const departmentSlice = createSlice({
             state.departments = []
             state.isLoading = true
             state.hasError = false
+            state.successMessage = null
         },
         getDepartmentSuccess: (state, action) => {
             state.departments = action.payload
@@ -26,12 +27,14 @@ export const departmentSlice = createSlice({
             state.isLoading = false
             state.hasError = true
             state.errorMessage = action.payload
+            state.successMessage = null
         },
         addDepartmentStart: (state) => {
             state.departments = [...state.departments]
             state.isLoading = true
             state.hasError = false
             state.errorMessage = null
+            state.successMessage = null
         },
         addDepartmentSuccess: (state, action) => {
             state.departments = [...state.departments, action.payload]
@@ -45,11 +48,13 @@ export const departmentSlice = createSlice({
             state.isLoading = false
             state.hasError = true
             state.errorMessage = action.payload
+            state.successMessage = null
         },
         updateDepartmentStart: (state) => {
             state.departments = [...state.departments]
             state.isLoading = true
             state.hasError = false
+            state.successMessage = null
         },
         updateDepartmentSuccess: (state, action) => {
             state.departments = state.departments.map((dept) => {
@@ -67,24 +72,31 @@ export const departmentSlice = createSlice({
             state.isLoading = false
             state.hasError = true
             state.errorMessage = action.payload
+            state.successMessage = null
         },
         deleteDepartmentStart: (state) => {
             state.departments = [...state.departments]
             state.isLoading = true
             state.hasError = false
+            state.successMessage = null
         },
         deleteDepartmentSuccess: (state, action) => {
-            state.departments = state.departments.filter(
-                (dept) => dept.id !== action.payload && dept
-            )
+            state.departments = state.departments.filter((department) => {
+                if (department._id !== action.payload.id) {
+                    return department
+                }
+                return null
+            })
             state.isLoading = false
             state.hasError = false
+            state.successMessage = action.payload.message
         },
         deleteDepartmentFailure: (state, action) => {
             state.departments = [...state.departments]
             state.isLoading = false
             state.hasError = true
             state.errorMessage = action.payload
+            state.successMessage = null
         }
     }
 })

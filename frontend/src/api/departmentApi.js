@@ -8,11 +8,15 @@ import {
     getDepartmentFailure,
     updateDepartmentStart,
     updateDepartmentSuccess,
-    updateDepartmentFailure
+    updateDepartmentFailure,
+    deleteDepartmentStart,
+    deleteDepartmentFailure,
+    deleteDepartmentSuccess
 } from "../redux/departmentSlice"
 
-/****************************************** Department API ********************************** */
 const DEPT_URL = `/department`
+
+// create department
 const createDepartment = async (dispatch, data) => {
     dispatch(addDepartmentStart())
 
@@ -38,6 +42,7 @@ const createDepartment = async (dispatch, data) => {
     }
 }
 
+// get all departments
 const getDepartments = async (dispatch) => {
     dispatch(getDepartmentStart())
     try {
@@ -74,4 +79,27 @@ const updateDepartment = async (dispatch, data, id) => {
         return false
     }
 }
-export { createDepartment, getDepartments, updateDepartment }
+
+// delete department
+const deleteDepartment = async (dispatch, id) => {
+    dispatch(deleteDepartmentStart())
+    try {
+        const response = await axios.delete(`/department/${id}`)
+        const message = await response.data.message
+
+        if (message) {
+            dispatch(deleteDepartmentSuccess({ id, message }))
+            return true
+        }
+    } catch (error) {
+        if (error.response.status === 400) {
+            dispatch(deleteDepartmentFailure(error.response.data.message))
+        } else {
+            dispatch(deleteDepartmentFailure(error.message))
+        }
+        console.log("Error in axios: ", error)
+        return false
+    }
+}
+
+export { createDepartment, getDepartments, updateDepartment, deleteDepartment }
