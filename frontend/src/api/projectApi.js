@@ -68,4 +68,7 @@ const getProjects = async (dispatch) => {
     }
 }
 
+// update project
+const updateProject = async () => {}
+
 export { createProject, getProjects }

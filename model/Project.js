@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const ProjectSchema = new mongoose.Schema(
     {
         projectName: { type: String, required: true },
-        projectId: { type: String, required: true, unique: true },
+        projectId: { type: String, required: true },
         clientName: { type: String },
         clientEmail: { type: String },
         department: { type: String },

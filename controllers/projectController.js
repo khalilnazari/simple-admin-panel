@@ -29,29 +29,22 @@ const createProject = async (req, res) => {
         res.status(500).json({ message: INTERNAL_ERROR_MESSAGE })
     }
 
-    // 1. Create new project.  2. Updated Dept
     try {
-        // 1:
+        // 1: Create new project.
         const newProject = new Project(req.body)
         const savedProject = await newProject.save()
-        const { _id, ...info } = savedProject._doc
+        const { _id } = savedProject._doc
         const newProjectID = _id.toString()
 
-        // 2:
-        const department = await Department.findByIdAndUpdate(departmentId, {
-            $push: { projects: newProjectID }
-        })
+        // 2. Updated Dept
+        const updatedDepartment = await Department.updateOne(
+            { _id: departmentId },
+            {
+                $push: { projects: newProjectID }
+            }
+        )
 
-        if (!department) {
-            return res.status(401).json({ message: "We couldn't find the select department." })
-        }
-        let currentProjectsInDept = department.projects
-
-        let updatedProjectsInDept = currentProjectsInDept.push(savedProject._id)
-        const updatedDepartment = await Department.findByIdAndUpdate(departmentId, {
-            projects: updatedProjectsInDept
-        })
-
+        // response to client
         if (updatedDepartment) {
             res.status(201).json(savedProject)
         } else {
