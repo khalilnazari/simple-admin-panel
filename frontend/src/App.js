@@ -18,7 +18,8 @@ import {
     Departments,
     Department,
     DepartmentAdd,
-    DepartmentUpdate
+    DepartmentUpdate,
+    ProjectUpdate
 } from "./containers"
 import "./App.scss"
 
@@ -43,6 +44,7 @@ const App = () => {
                         <Route path="/projects" element={<Projects />} />
                         <Route path="/project/:id" element={<Project />} />
                         <Route path="/add-project" element={<ProjectAdd />} />
+                        <Route path="/project-update/:id" element={<ProjectUpdate />} />
                         <Route path="/tickets" element={<Tickets />} />
                         <Route path="/ticket/:id" element={<Ticket />} />
                         <Route path="/ticket-add" element={<TicketAdd />} />

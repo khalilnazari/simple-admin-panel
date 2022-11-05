@@ -1,74 +1,34 @@
-import { useCallback, useState } from "react"
-import { FormContainer, PageHeader, TextInput } from "../../components"
-
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
 import Swal from "sweetalert2"
-import { useLocation } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import {
-    updateProjectFailure,
-    updateProjectStart,
-    updateProjectSuccess,
-    deleteProjectFailure,
-    deleteProjectStart,
-    deleteProjectSuccess
-} from "../../redux/projectSlice"
+import { AlertError, AlertSuccess, Loading, PageHeader } from "../../components"
+import { deleteProject } from "../../api/projectApi"
+import "./Project.scss"
 
 const Project = () => {
     const dispatch = useDispatch()
-    const location = useLocation()
-    const project = location.state?.item
-    const [editInput, setEditInput] = useState(true)
-    const handleEditForm = () => setEditInput((prev) => !prev)
+    const navigate = useNavigate()
+    const { id } = useParams()
 
-    const [input, setInput] = useState({
-        projectName: project.projectName || "",
-        clientName: project.clientName || "",
-        phoneNumber: project.phoneNumber || "",
-        email: project.email || "",
-        joinDate: project.joinDate || ""
-    })
-
-    const handleInputChange = useCallback(
-        (e) => {
-            setInput({ ...input, [e.target.name]: e.target.value })
-        },
-        [input]
+    const { projects, hasError, errorMessage, isLoading, successMessage } = useSelector(
+        (state) => state.projects
     )
+    const project = projects.find((dept) => dept._id === id)
 
-    // update project
-    const handleUpdate = (e) => {
-        e.preventDefault()
-
-        // update start
-        dispatch(updateProjectStart())
-
-        // confirmation alert
-        Swal.fire({
-            title: "Do you want to save the changes?",
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't save`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(updateProjectSuccess({ data: input, id: project.id }))
-
-                // if updated successfully
-                if (true) {
-                    Swal.fire("Saved!", "Changes has been saved.", "success")
-                } else {
-                    dispatch(updateProjectFailure())
-                    Swal.fire("Oppos!", "An error ocurred, please try again.", "error")
-                }
-            }
-        })
+    const deleteDept = async () => {
+        const res = await deleteProject(dispatch, project._id)
+        if (res) {
+            Swal.fire("Deleted!", "The project has been deleted.", "success")
+            setTimeout(() => {
+                navigate("/projects")
+            }, 1000)
+        } else {
+            Swal.fire("Error", "The project couldn't be deleted.", "error")
+        }
     }
 
-    // Delete Project
-    const handleDeleteProject = () => {
-        // start delete
-        dispatch(deleteProjectStart)
-
-        // confirm alert
+    // handle Delete department
+    const handleDelete = async () => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -79,114 +39,45 @@ const Project = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteProjectSuccess(project.id))
-
-                // if deleted successfully
-                if (false) {
-                    Swal.fire("Deleted!", "Project has been deleted.", "success")
-                } else {
-                    dispatch(deleteProjectFailure)
-                    Swal.fire("Opps!", "An error has been occured. Try again.", "error")
-                }
+                deleteDept()
             }
         })
     }
 
     // jsx
     return (
-        <div className="project">
-            {/* Page title */}
+        <div>
+            {/* isLoading  */}
+            {isLoading && <Loading loadingMessage="Deleting Department" />}
+
+            {/* header */}
             <PageHeader
-                title="Project Details"
-                editButtonText="Update details"
-                handleEditForm={handleEditForm}
+                title="Department"
+                link={`/project-update/${project?._id}`}
+                addButtonText="Update details"
             />
 
-            {/* Page body */}
-            <div className="formWrapper">
-                <FormContainer>
-                    <form onSubmit={handleUpdate}>
-                        <div className="inputContainer">
-                            <TextInput
-                                label="Project name"
-                                id="projectName"
-                                type="text"
-                                name="projectName"
-                                placeholder="Enter project name"
-                                value={input.projectName}
-                                handleValue={handleInputChange}
-                                editInput={editInput}
-                            />
+            {/* Errors */}
+            {hasError && <AlertError message={errorMessage} />}
+            {successMessage && <AlertSuccess message={successMessage} />}
 
-                            <TextInput
-                                label="Client"
-                                id="clientName"
-                                type="text"
-                                name="clientName"
-                                placeholder="Enter client name"
-                                value={input.clientName}
-                                handleValue={handleInputChange}
-                                editInput={editInput}
-                            />
+            {/* body */}
+            <div className="pageBody">
+                <div className="boxes">
+                    <div className="box">{project?.projectName}</div>
+                    <div className="box">{project?.projectId}</div>
+                    <div className="box">{project?.projectManager}</div>
+                    <div className="box">{project?.clientName}</div>
+                    <div className="box">{project?.clientEmail}</div>
+                    <div className="box">{project?.projectManager}</div>
+                </div>
+            </div>
 
-                            <TextInput
-                                label="Email"
-                                id="email"
-                                type="text"
-                                name="email"
-                                placeholder="Enter client email"
-                                value={input.email}
-                                handleValue={handleInputChange}
-                                editInput={editInput}
-                            />
-
-                            <TextInput
-                                label="Phone number"
-                                id="phone"
-                                type="text"
-                                name="phone"
-                                placeholder="Enter phone"
-                                value={input.phoneNumber}
-                                handleValue={handleInputChange}
-                                editInput={editInput}
-                            />
-
-                            <TextInput
-                                label="Join date"
-                                id="joindate"
-                                type="date"
-                                name="joinDate"
-                                value={input.joinDate}
-                                handleValue={handleInputChange}
-                                editInput={editInput}
-                            />
-                        </div>
-
-                        {/* buttons */}
-                        {!editInput ? (
-                            <div className="buttonControl">
-                                <button
-                                    type="button"
-                                    className="btn"
-                                    onClick={() => setEditInput((prev) => !prev)}
-                                >
-                                    Cancel
-                                </button>
-                                <button type="submit">Submit</button>
-                            </div>
-                        ) : (
-                            <div className="buttonControl">
-                                <button
-                                    type="button"
-                                    className="btn btn-danger"
-                                    onClick={() => handleDeleteProject()}
-                                >
-                                    Delete Project
-                                </button>
-                            </div>
-                        )}
-                    </form>
-                </FormContainer>
+            {/* footer */}
+            <div className="footer">
+                <button className="btn btn-danger" type="button" onClick={handleDelete}>
+                    Delete Department
+                </button>
             </div>
         </div>
     )

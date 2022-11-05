@@ -6,7 +6,8 @@ export const projectSlice = createSlice({
         projects: [],
         hasError: null,
         errorMessage: null,
-        isLoading: null
+        isLoading: null,
+        successMessage: null
     },
 
     reducers: {
@@ -15,6 +16,7 @@ export const projectSlice = createSlice({
             state.isLoading = true
             state.hasError = false
             state.errorMessage = null
+            state.successMessage = null
         },
         getProjectSuccess: (state, action) => {
             state.projects = action.payload
@@ -25,6 +27,7 @@ export const projectSlice = createSlice({
             state.projects = []
             state.isLoading = false
             state.hasError = true
+            state.successMessage = null
         },
         addProjectStart: (state) => {
             state.projects = [...state.projects]
@@ -51,6 +54,7 @@ export const projectSlice = createSlice({
             state.projects = [...state.projects]
             state.isLoading = true
             state.hasError = false
+            state.successMessage = null
         },
         updateProjectSuccess: (state, action) => {
             state.projects = state.projects.map((project) => {
@@ -60,6 +64,7 @@ export const projectSlice = createSlice({
 
                 return project
             })
+            state.successMessage = action.payload.message
             state.isLoading = false
             state.hasError = false
         },
@@ -67,24 +72,27 @@ export const projectSlice = createSlice({
             state.projects = [...state.projects]
             state.isLoading = false
             state.hasError = true
+            state.successMessage = null
         },
         deleteProjectStart: (state) => {
             state.projects = [...state.projects]
             state.isLoading = true
             state.hasError = false
+            state.successMessage = null
         },
         deleteProjectSuccess: (state, action) => {
-            console.log(action)
             state.projects = state.projects.filter(
-                (project) => project.id !== action.payload && project
+                (project) => project._id !== action.payload.id && project
             )
             state.isLoading = false
             state.hasError = false
+            state.successMessage = action.payload.message
         },
         deleteProjectFailure: (state) => {
             state.projects = [...state.projects]
             state.isLoading = false
             state.hasError = true
+            state.successMessage = null
         }
     }
 })

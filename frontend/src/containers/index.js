@@ -17,6 +17,7 @@ import Department from "./department/Department"
 import DepartmentAdd from "./departmentAdd/DepartmentAdd"
 import Departments from "./departments/Departments"
 import DepartmentUpdate from "./departmentUpdate/DepartmentUpdate"
+import ProjectUpdate from "./projectUpdate/ProjectUpdate"
 
 export {
     Dashboard,
@@ -29,6 +30,7 @@ export {
     Project,
     Projects,
     ProjectAdd,
+    ProjectUpdate,
     Tickets,
     Ticket,
     TicketAdd,

@@ -19,7 +19,7 @@ const Projects = () => {
     }
 
     // tables headers
-    const columns = ["Project name", "Client", "Join date", "View"]
+    const columns = ["Project name", "Client", "View"]
 
     // jsx
     return (

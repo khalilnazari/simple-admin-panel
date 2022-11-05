@@ -6,7 +6,10 @@ import {
     addProjectStart,
     getProjectStart,
     getProjectSuccess,
-    getProjectFailure
+    getProjectFailure,
+    deleteProjectStart,
+    deleteProjectSuccess,
+    deleteProjectFailure
 } from "../redux/projectSlice"
 
 const serverError = "Opps! we could not complete your request. Please try gain."
@@ -71,4 +74,30 @@ const getProjects = async (dispatch) => {
 // update project
 const updateProject = async () => {}
 
-export { createProject, getProjects }
+// delete project.
+const deleteProject = async (dispatch, id) => {
+    dispatch(deleteProjectStart())
+    try {
+        const response = await axios.delete(`/project/${id}`)
+        const message = await response.data.message
+
+        if (message) {
+            dispatch(deleteProjectSuccess({ id, message }))
+            return true
+        }
+    } catch (error) {
+        if (error.response.status === 400) {
+            dispatch(deleteProjectFailure(error.response.data.message))
+        } else if (error.response.status === 401) {
+            dispatch(deleteProjectFailure(error.response.data.message))
+        } else if (error.response.status === 500) {
+            dispatch(deleteProjectFailure(error.response.data.message))
+        } else {
+            dispatch(deleteProjectFailure(error.message))
+        }
+        console.log("Error in axios: ", error)
+        return false
+    }
+}
+
+export { createProject, getProjects, deleteProject }

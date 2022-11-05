@@ -1,71 +1,99 @@
 import { useCallback, useState } from "react"
-import {
-    SelectInput,
-    FormContainer,
-    PageHeader,
-    TextInput,
-    Loading,
-    AlertError,
-    AlertSuccess
-} from "../../components"
 import Swal from "sweetalert2"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { createProject } from "../../api/projectApi"
 import { FaSpinner } from "react-icons/fa"
+import {
+    AlertError,
+    AlertSuccess,
+    FormContainer,
+    Loading,
+    PageHeader,
+    SelectInput,
+    TextInput
+} from "../../components"
+import {
+    updateProjectFailure,
+    updateProjectStart,
+    updateProjectSuccess
+} from "../../redux/projectSlice"
 
-const ProjectAdd = () => {
+const ProjectUpdate = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    // state
-    const { isLoading, hasError, errorMessage, successMessage } = useSelector(
+    const { id } = useParams()
+    const { projects, hasError, errorMessage, successMessage, isLoading } = useSelector(
         (state) => state.projects
     )
     const { departments } = useSelector((state) => state.departments)
-    const [input, setInput] = useState({
-        projectName: "",
-        projectId: "",
-        clientName: "",
-        clientEmail: "",
-        projectManager: "",
-        department: ""
-    })
-    const departmentsName = departments.map((dept) => dept.deptName)
+    const project = projects.find((project) => project._id === id)
+    console.log(project)
 
-    // handle input change
+    const [input, setInput] = useState({
+        projectName: project.projectName || "",
+        clientName: project.clientName || "",
+        clientEmail: project.clientEmail || "",
+        department: project.department || ""
+    })
+
     const handleInputChange = useCallback(
         (e) => {
             setInput({ ...input, [e.target.name]: e.target.value })
         },
         [input]
     )
+
+    const departmentsName = departments.map((dept) => dept.deptName)
     const handleInputDeptChange = (e) => {
         const { _id: departmentId } = departments.find((dept) => dept.deptName === e.target.value)
         setInput({ ...input, [e.target.name]: departmentId })
     }
 
-    const handleSubmit = async (e) => {
+    // update project
+    const handleUpdate = (e) => {
         e.preventDefault()
-        createProject(dispatch, input)
+
+        // update start
+        dispatch(updateProjectStart())
+
+        // confirmation alert
+        Swal.fire({
+            title: "Do you want to save the changes?",
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            denyButtonText: `Don't save`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(updateProjectSuccess({ data: input, id: project.id }))
+
+                // if updated successfully
+                if (true) {
+                    Swal.fire("Saved!", "Changes has been saved.", "success")
+                } else {
+                    dispatch(updateProjectFailure())
+                    Swal.fire("Oppos!", "An error ocurred, please try again.", "error")
+                }
+            }
+        })
     }
 
     // jsx
     return (
         <div className="project">
-            {isLoading && <Loading loadingMessage="Saving project..." />}
+            {/* isLoading  */}
+            {isLoading && <Loading loadingMessage="Deleting Department" />}
 
             {/* Page title */}
-            <PageHeader title={`Add new project`} />
+            <PageHeader title="Project Details" />
 
-            {/* Alerts */}
+            {/* Errors */}
             {hasError && <AlertError message={errorMessage} />}
             {successMessage && <AlertSuccess message={successMessage} />}
 
             {/* Page body */}
             <div className="formWrapper">
                 <FormContainer>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleUpdate}>
                         <div className="inputContainer">
                             <TextInput
                                 label="Project name"
@@ -74,16 +102,6 @@ const ProjectAdd = () => {
                                 name="projectName"
                                 placeholder="Enter project name"
                                 value={input.projectName}
-                                handleValue={handleInputChange}
-                            />
-
-                            <TextInput
-                                label="Project ID"
-                                id="projectId"
-                                type="text"
-                                name="projectId"
-                                placeholder="Enter project ID"
-                                value={input.projectId}
                                 handleValue={handleInputChange}
                             />
 
@@ -131,7 +149,7 @@ const ProjectAdd = () => {
 
                         {/* buttons */}
                         <div className="buttonControl">
-                            <button type="button" onClick={() => navigate(-1)}>
+                            <button type="button" className="btn" onClick={() => navigate(-1)}>
                                 Cancel
                             </button>
                             <button
@@ -149,4 +167,4 @@ const ProjectAdd = () => {
     )
 }
 
-export default ProjectAdd
+export default ProjectUpdate

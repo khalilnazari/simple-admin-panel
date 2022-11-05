@@ -19,12 +19,11 @@ const ProjectTable = ({ columns, data, path }) => {
                     {/* body */}
                     <tbody>
                         {data.map((item) => (
-                            <tr key={item.id}>
+                            <tr key={item._id}>
                                 <td>{item.projectName}</td>
                                 <td>{item.clientName}</td>
-                                <td>{item.joinDate}</td>
                                 <td>
-                                    <Link to={`/${path}/${item.id}`} state={{ item: item }}>
+                                    <Link to={`/${path}/${item._id}`} state={{ item: item }}>
                                         View
                                     </Link>
                                 </td>

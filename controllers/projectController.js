@@ -74,7 +74,12 @@ const getProject = async (req, res) => {
 
     try {
         const project = await Project.findById(id)
-        res.status(201).json(project)
+        const { department, ...rest } = project._doc
+        const { deptName } = await Department.findById(department)
+        let projectObj = {}
+        Object.assign(projectObj, rest, { deptName })
+
+        res.status(201).json(projectObj)
     } catch (error) {
         res.status(500).json({ message: INTERNAL_ERROR_MESSAGE })
     }
@@ -100,41 +105,8 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     const { id } = req.params
-    // const { departmentId } = req.body
 
-    // 1. Update related Department
-    // 2. Delete all of its tickets
-    // 3. update users
-    // 4. Delete the project
     try {
-        // 1 :
-        // const department = await Department.find({ _id: departmentId }, { projects: 1 })
-        // if (!department) {
-        //     return res.status(401).json({
-        //         message: "We couldn't find the related Department to update."
-        //     })
-        // }
-        // let currentProjectsInDept = await department.projects
-        // let updatedProjectsInDept = await currentProjectsInDept.filter(
-        //     (id) => departmentId !== id && id
-        // )
-        // const updatedDepartment = await Department.findByIdAndUpdate(departmentId, {
-        //     projects: updatedProjectsInDept
-        // })
-        // if (!updatedDepartment) {
-        //     return res.status(401).json({ message: "We couldn't update the deptartment!" })
-        // }
-
-        // 2 :
-        // const updatedTickets = await Ticket.deleteMany({
-        //     project: departmentId
-        // })
-        // if (updatedTickets) {
-        //     return res.status(401).json({ message: "We couldn't update Tickets!" })
-        // }
-
-        // 3 :
-        // 4 :
         await Project.findByIdAndDelete(id)
         res.status(201).json({
             message:
