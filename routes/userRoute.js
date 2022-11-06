@@ -1,5 +1,11 @@
 const router = require("express").Router()
-const { createUser, fetchUsers, fetchUser } = require("../controllers/userController")
+const {
+    createUser,
+    fetchUsers,
+    fetchUser,
+    updareUser,
+    deleteUser
+} = require("../controllers/userController")
 
 // create user
 router.post("/", createUser)
@@ -8,6 +14,12 @@ router.post("/", createUser)
 router.get("/", fetchUsers)
 
 // fetch one user
-router.get("/:id", fetchUser)
+router.get("/find/:id", fetchUser)
+
+// update user
+router.put("/:id", updareUser)
+
+// delete user
+router.delete("/:id", deleteUser)
 
 module.exports = router
