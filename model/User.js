@@ -9,7 +9,11 @@ const UserSchema = new mongoose.Schema(
         email: { type: String, required: true, unique: true },
         phoneNumber: { type: String },
         role: { type: String },
-        tickets: { type: Array } // ["task_1_id", "task_2_id", "task_3_id"]
+        tickets: { type: Array },
+        department: {
+            deptName: String,
+            deptId: String
+        }
     },
     { timestamps: true }
 )

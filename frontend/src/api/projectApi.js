@@ -9,7 +9,10 @@ import {
     getProjectFailure,
     deleteProjectStart,
     deleteProjectSuccess,
-    deleteProjectFailure
+    deleteProjectFailure,
+    updateProjectStart,
+    updateProjectSuccess,
+    updateProjectFailure
 } from "../redux/projectSlice"
 
 const serverError = "Opps! we could not complete your request. Please try gain."
@@ -50,7 +53,6 @@ const getProjects = async (dispatch) => {
         const response = await axios.get(`/project`)
         if (response.status === 201) {
             dispatch(getProjectSuccess(response.data))
-            console.log(response.data)
             return true
         } else {
             throw Error(serverError)
@@ -72,7 +74,40 @@ const getProjects = async (dispatch) => {
 }
 
 // update project
-const updateProject = async () => {}
+const updateProject = async (dispatch, data, id) => {
+    console.log(data, id)
+    dispatch(updateProjectStart())
+
+    try {
+        const response = await axios.put(`/project/${id}`, data)
+
+        if (response.status === 201) {
+            dispatch(
+                updateProjectSuccess({
+                    data: response.data,
+                    id,
+                    message: "Project has been updated successfully!"
+                })
+            )
+            return true
+        } else {
+            throw Error(serverError)
+        }
+    } catch (error) {
+        if (error.response.status === 400) {
+            dispatch(updateProjectFailure(error.response.data.message))
+        } else if (error.response.status === 401) {
+            dispatch(updateProjectFailure(error.response.data.message))
+        } else if (error.response.status === 500) {
+            dispatch(updateProjectFailure(error.response.data.message))
+        } else {
+            dispatch(updateProjectFailure(error.message))
+        }
+
+        console.log("Error in axios: ", error.message)
+        return false
+    }
+}
 
 // delete project.
 const deleteProject = async (dispatch, id) => {
@@ -100,4 +135,4 @@ const deleteProject = async (dispatch, id) => {
     }
 }
 
-export { createProject, getProjects, deleteProject }
+export { createProject, getProjects, deleteProject, updateProject }

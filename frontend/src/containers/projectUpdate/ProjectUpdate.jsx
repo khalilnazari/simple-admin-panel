@@ -12,11 +12,8 @@ import {
     SelectInput,
     TextInput
 } from "../../components"
-import {
-    updateProjectFailure,
-    updateProjectStart,
-    updateProjectSuccess
-} from "../../redux/projectSlice"
+
+import { updateProject } from "../../api/projectApi"
 
 const ProjectUpdate = () => {
     const dispatch = useDispatch()
@@ -25,15 +22,19 @@ const ProjectUpdate = () => {
     const { projects, hasError, errorMessage, successMessage, isLoading } = useSelector(
         (state) => state.projects
     )
-    const { departments } = useSelector((state) => state.departments)
     const project = projects.find((project) => project._id === id)
-    console.log(project)
 
+    // department
+    const { departments } = useSelector((state) => state.departments)
+    const departmentsName = departments.map((dept) => dept.deptName)
+
+    // state
+    const [deptName, setDeptName] = useState("")
     const [input, setInput] = useState({
-        projectName: project.projectName || "",
-        clientName: project.clientName || "",
-        clientEmail: project.clientEmail || "",
-        department: project.department || ""
+        projectName: project?.projectName || "",
+        clientName: project?.clientName || "",
+        clientEmail: project?.clientEmail || "",
+        department: project?.department || {}
     })
 
     const handleInputChange = useCallback(
@@ -43,20 +44,32 @@ const ProjectUpdate = () => {
         [input]
     )
 
-    const departmentsName = departments.map((dept) => dept.deptName)
+    // handle input changes
     const handleInputDeptChange = (e) => {
-        const { _id: departmentId } = departments.find((dept) => dept.deptName === e.target.value)
-        setInput({ ...input, [e.target.name]: departmentId })
+        const { _id: departmentId, deptName } = departments.find(
+            (dept) => dept.deptName === e.target.value
+        )
+        setInput({ ...input, [e.target.name]: { departmentId, deptName } })
+        setDeptName(e.target.value)
+    }
+
+    const projectUpdateApi = async () => {
+        const res = await updateProject(dispatch, input, id)
+        if (res) {
+            Swal.fire("Saved!", "Changes has been saved.222", "success")
+            setTimeout(() => {
+                console.log(`loginto : /department/${id}`)
+                navigate(`/project/${id}`)
+            }, 1000)
+        } else {
+            Swal.fire("Oppos!", "An error ocurred, please try again.", "error")
+        }
     }
 
     // update project
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault()
 
-        // update start
-        dispatch(updateProjectStart())
-
-        // confirmation alert
         Swal.fire({
             title: "Do you want to save the changes?",
             showCancelButton: true,
@@ -64,15 +77,7 @@ const ProjectUpdate = () => {
             denyButtonText: `Don't save`
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(updateProjectSuccess({ data: input, id: project.id }))
-
-                // if updated successfully
-                if (true) {
-                    Swal.fire("Saved!", "Changes has been saved.", "success")
-                } else {
-                    dispatch(updateProjectFailure())
-                    Swal.fire("Oppos!", "An error ocurred, please try again.", "error")
-                }
+                projectUpdateApi()
             }
         })
     }
@@ -130,7 +135,7 @@ const ProjectUpdate = () => {
                                 label="Department"
                                 id="department"
                                 name="department"
-                                value={input.department}
+                                value={deptName}
                                 options={departmentsName}
                                 handleValue={handleInputDeptChange}
                                 errorMessage=""

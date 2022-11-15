@@ -1,10 +1,11 @@
 const User = require("../model/User")
+const Department = require("../model/Department")
 const CryptoJS = require("crypto-js")
 
 const INTERNAL_ERROR_MESSAGE = "Internal server error. Please contact engineering team."
 // create new user
 const createUser = async (req, res) => {
-    const { password, email, firstName } = req.body
+    const { password, email, firstName, lastName, role, deptId, deptName, phoneNumber } = req.body
 
     // check required fields
     if (!firstName || !email) {
@@ -26,12 +27,34 @@ const createUser = async (req, res) => {
 
     // enctypt password
     const encryptedPass = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString()
-    req.body.password = encryptedPass
 
-    // save new user
+    const newUserObj = {
+        firstName,
+        lastName,
+        password: encryptedPass,
+        email,
+        phoneNumber,
+        role,
+        department: {
+            deptName,
+            deptId
+        }
+    }
+
     try {
-        const newUser = new User(req.body)
+        // Create user
+        const newUser = new User(newUserObj)
         const user = await newUser.save()
+        const { _id: userId } = user._doc
+
+        // update Department
+        await Department.updateOne(
+            { _id: deptId },
+            {
+                $push: { members: userId }
+            }
+        )
+
         res.status(201).json(user)
     } catch (err) {
         res.status(500).json({ message: INTERNAL_ERROR_MESSAGE })
@@ -68,8 +91,10 @@ const fetchUsers = async (req, res) => {
 }
 
 const updareUser = async (req, res) => {
-    const { firstName, email, password } = req.body
-    const { id } = req.params
+    const { email, firstName } = req.body
+    const { password, deptId, deptName, ...restOfReq } = req.body
+    const { id: updateUserID } = req.params
+    const userObject = {}
 
     // check required fields
     if (!firstName) {
@@ -79,11 +104,14 @@ const updareUser = async (req, res) => {
     // check existing user
     if (email) {
         try {
-            const existingUser = await User.findOne({ email })
+            const existingUser = await User.findOne({ email: req.body.email })
+            console.log(existingUser)
             if (existingUser) {
                 return res
                     .status(400)
                     .json({ message: "A user with same email address is already exist!" })
+            } else {
+                Object.assign(userObject, { email })
             }
         } catch (error) {
             res.status(500).json({ message: INTERNAL_ERROR_MESSAGE })
@@ -91,13 +119,34 @@ const updareUser = async (req, res) => {
         }
     }
 
+    // if password is updated
     if (password) {
         const encryptedPass = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString()
-        req.body.password = encryptedPass
+        Object.assign(userObject, { password: encryptedPass })
+    }
+
+    Object.keys(restOfReq).forEach((key) => {
+        if (restOfReq[key] !== undefined) {
+            userObject[key] = restOfReq[key]
+        }
+    })
+
+    if (deptId) {
+        Object.assign(userObject, {
+            department: {
+                deptId,
+                deptName
+            }
+        })
     }
 
     try {
-        const updatedUser = await User.findByIdAndUpdate(id, { $set: req.body }, { new: true })
+        const updatedUser = await User.findByIdAndUpdate(
+            updateUserID,
+            { $set: userObject },
+            { new: true }
+        )
+
         res.status(201).json(updatedUser)
     } catch (error) {
         res.status(500).json({ message: INTERNAL_ERROR_MESSAGE })

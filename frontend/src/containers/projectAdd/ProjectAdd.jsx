@@ -23,15 +23,18 @@ const ProjectAdd = () => {
         (state) => state.projects
     )
     const { departments } = useSelector((state) => state.departments)
+    const departmentsName = departments.map((dept) => dept.deptName)
+
+    // state
+    const [deptName, setDeptName] = useState("")
     const [input, setInput] = useState({
         projectName: "",
         projectId: "",
         clientName: "",
         clientEmail: "",
         projectManager: "",
-        department: ""
+        department: {}
     })
-    const departmentsName = departments.map((dept) => dept.deptName)
 
     // handle input change
     const handleInputChange = useCallback(
@@ -40,9 +43,15 @@ const ProjectAdd = () => {
         },
         [input]
     )
+
+    console.log(deptName, input)
+
     const handleInputDeptChange = (e) => {
-        const { _id: departmentId } = departments.find((dept) => dept.deptName === e.target.value)
-        setInput({ ...input, [e.target.name]: departmentId })
+        const { _id: departmentId, deptName } = departments.find(
+            (dept) => dept.deptName === e.target.value
+        )
+        setInput({ ...input, [e.target.name]: { departmentId, deptName } })
+        setDeptName(e.target.value)
     }
 
     const handleSubmit = async (e) => {
@@ -112,7 +121,7 @@ const ProjectAdd = () => {
                                 label="Department"
                                 id="department"
                                 name="department"
-                                value={input.department}
+                                value={deptName}
                                 options={departmentsName}
                                 handleValue={handleInputDeptChange}
                                 errorMessage=""

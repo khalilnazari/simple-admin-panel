@@ -58,10 +58,9 @@ export const projectSlice = createSlice({
         },
         updateProjectSuccess: (state, action) => {
             state.projects = state.projects.map((project) => {
-                if (project.id === action.payload.id) {
+                if (project._id === action.payload.id) {
                     return action.payload.data
                 }
-
                 return project
             })
             state.successMessage = action.payload.message

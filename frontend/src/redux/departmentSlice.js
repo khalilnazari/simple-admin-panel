@@ -8,7 +8,8 @@ export const departmentSlice = createSlice({
         errorMessage: null,
         isLoading: null,
         successMessage: null,
-        departmentsList: []
+        deptList: [],
+        people: ""
     },
 
     reducers: {
@@ -43,6 +44,7 @@ export const departmentSlice = createSlice({
             state.hasError = false
             state.errorMessage = null
             state.successMessage = action.payload.message
+            state.deptList = state.departments.map((dept) => dept.deptName)
         },
         addDepartmentFailure: (state, action) => {
             state.departments = [...state.departments]
