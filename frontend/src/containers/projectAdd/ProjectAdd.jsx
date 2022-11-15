@@ -44,8 +44,6 @@ const ProjectAdd = () => {
         [input]
     )
 
-    console.log(deptName, input)
-
     const handleInputDeptChange = (e) => {
         const { _id: departmentId, deptName } = departments.find(
             (dept) => dept.deptName === e.target.value

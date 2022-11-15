@@ -5,7 +5,7 @@ const CryptoJS = require("crypto-js")
 const INTERNAL_ERROR_MESSAGE = "Internal server error. Please contact engineering team."
 // create new user
 const createUser = async (req, res) => {
-    const { password, email, firstName, lastName, role, deptId, deptName, phoneNumber } = req.body
+    const { password, email, firstName, department } = req.body
 
     // check required fields
     if (!firstName || !email) {
@@ -27,31 +27,19 @@ const createUser = async (req, res) => {
 
     // enctypt password
     const encryptedPass = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString()
-
-    const newUserObj = {
-        firstName,
-        lastName,
-        password: encryptedPass,
-        email,
-        phoneNumber,
-        role,
-        department: {
-            deptName,
-            deptId
-        }
-    }
+    req.body.password = encryptedPass
 
     try {
         // Create user
-        const newUser = new User(newUserObj)
+        const newUser = new User(req.body)
         const user = await newUser.save()
-        const { _id: userId } = user._doc
+        const { password, ...rest } = user._doc
 
         // update Department
         await Department.updateOne(
-            { _id: deptId },
+            { _id: department.id },
             {
-                $push: { members: userId }
+                $push: { members: rest }
             }
         )
 

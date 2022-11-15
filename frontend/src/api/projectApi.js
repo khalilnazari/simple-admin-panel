@@ -75,7 +75,6 @@ const getProjects = async (dispatch) => {
 
 // update project
 const updateProject = async (dispatch, data, id) => {
-    console.log(data, id)
     dispatch(updateProjectStart())
 
     try {

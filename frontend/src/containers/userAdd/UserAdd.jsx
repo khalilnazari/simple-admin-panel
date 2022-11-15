@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
-import { FormContainer, PageHeader, TextInput } from "../../components"
+import { FormContainer, PageHeader, SelectInput, TextInput } from "../../components"
 import { createUser } from "../../api/userApi"
 
 const UserAdd = () => {
@@ -10,21 +10,42 @@ const UserAdd = () => {
     const navigate = useNavigate()
 
     const { hasError, errorMessage, isLoading } = useSelector((state) => state.users)
+    const { roles } = useSelector((state) => state.roles)
+    const rolesName = roles.map((role) => role.name)
 
+    const { departments } = useSelector((state) => state.departments)
+    const departmentsName = departments.map((dept) => dept.deptName)
+
+    const [deptName, setDeptName] = useState("")
+    const [role, setRole] = useState("")
     const [input, setInput] = useState({
         firstName: "",
         lastName: "",
         phoneNumber: "",
         email: "",
-        password: ""
+        password: "",
+        department: {}
     })
 
-    const handleInputChange = useCallback(
-        (e) => {
-            setInput({ ...input, [e.target.name]: e.target.value })
-        },
-        [input]
-    )
+    const handleInputChange = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value })
+    }
+
+    const handleDeptChange = (e) => {
+        const { _id: id, deptName: name } = departments.find(
+            (dept) => dept.deptName === e.target.value
+        )
+        setInput({ ...input, [e.target.name]: { id, name } })
+        setDeptName(e.target.value)
+    }
+
+    const handleRoletChange = (e) => {
+        const { id, name } = roles.find((role) => role.name === e.target.value)
+        setInput({ ...input, [e.target.name]: { id, name } })
+        setRole(e.target.value)
+    }
+
+    console.log(input)
 
     // required inputs
     const { firstName, lastName } = input
@@ -96,6 +117,29 @@ const UserAdd = () => {
                                 value={input.phoneNumber}
                                 handleValue={handleInputChange}
                             />
+
+                            {/* department */}
+                            <SelectInput
+                                label="Department"
+                                id="department"
+                                name="department"
+                                value={deptName}
+                                options={departmentsName}
+                                handleValue={handleDeptChange}
+                                errorMessage=""
+                            />
+
+                            {/* role */}
+                            <SelectInput
+                                label="Role"
+                                id="role"
+                                name="role"
+                                value={role}
+                                options={rolesName}
+                                handleValue={handleRoletChange}
+                                errorMessage=""
+                            />
+
                             <TextInput
                                 label="Password"
                                 id="password"
